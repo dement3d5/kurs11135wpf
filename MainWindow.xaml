@@ -1,0 +1,31 @@
+﻿<Window x:Class="kurs11135.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kurs11135"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Background="Gray">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75*"/>
+                <ColumnDefinition Width="79*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <Grid>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button Grid.Column="0" Command="{Binding Order}">Заказы</Button>
+                <Button Grid.Column="0" Command="{Binding Order}">Отчеты</Button>
+                <Button Grid.Column="0" Command="{Binding Product}">Список Товара</Button>
+                <Button Grid.Column="1">Выход</Button>
+        </StackPanel>
+        </Grid>
+          <Frame NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}" Grid.Row="1"/>
+        </Grid>
+  
+</Window>
