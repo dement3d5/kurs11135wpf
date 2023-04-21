@@ -52,7 +52,7 @@ namespace kurs11135.VM
             }
         }
 
-
+        
         public Order SelectedItem { get; set; }
         public List<OrderStatus> orderStatuses { get; set; }
         private OrderStatus listOrderStatus;
