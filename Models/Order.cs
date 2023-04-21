@@ -1,8 +1,7 @@
-﻿using kurs11135.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace kurs11135
+namespace kurs11135.Models
 {
     public partial class Order
     {
@@ -12,11 +11,11 @@ namespace kurs11135
         }
 
         public int Id { get; set; }
-        public int StatusId { get; set; }
-        public DateTime CreateAt { get; set; }
-        public int UserId { get; set; }
-        public decimal Cost { get; set; }
-        public string Count { get; set; } = null!;
+        public int? StatusId { get; set; }
+        public DateTime CreateAt { get; set; } = DateTime.Now;
+        public int? UserId { get; set; }
+        public decimal? Cost { get; set; }
+        public string? Count { get; set; } = null!;
         public int? ProductId { get; set; }
 
         public virtual Product? Product { get; set; }

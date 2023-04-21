@@ -16,18 +16,23 @@
 
 
     </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding ListOrdersStatus}" SelectedItem="{Binding OrderStatus}" Grid.Row="2">
+        <ListView ItemsSource="{Binding orders}" SelectedItem="{Binding SelectedItem}" Grid.Row="1">
 
             <ListView.View >
                 <GridView>
-                    <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status.Name}"/>
+                    <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding CreateAt}"/>
+                    <GridViewColumn Header="Стоимость" DisplayMemberBinding="{Binding Cost}"/>
+                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Count}"/>
+                    <GridViewColumn Header="Товар"  DisplayMemberBinding="{Binding Product.ProductName}"/>
+                    <GridViewColumn Header="Покупатель" DisplayMemberBinding="{Binding User.Login}"/>
                 </GridView>
             </ListView.View>
         </ListView>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
             <Button Command="{Binding AddOrder}" Content="Добавить"/>
             <Button Content="Редактировать"/>
-            <Button Content="Удалить"/>
+            <Button Command="{Binding DelOrder}" Content="Удалить"/>
         </StackPanel>
     
    

@@ -11,14 +11,14 @@ namespace kurs11135.Models
         }
 
         public int Id { get; set; }
-        public string Login { get; set; } = null!;
-        public string Password { get; set; } = null!;
-        public string Organization { get; set; } = null!;
-        public string FirstName { get; set; } = null!;
-        public string LastName { get; set; } = null!;
-        public int StatusId { get; set; }
+        public string? Login { get; set; }
+        public string? Password { get; set; }
+        public string? Organization { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public int? StatusId { get; set; }
 
-        public virtual UserPosition Status { get; set; } = null!;
+        public virtual UserPosition? Status { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

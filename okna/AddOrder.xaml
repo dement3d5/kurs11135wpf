@@ -19,22 +19,25 @@
             <RowDefinition Height="40*"/>
             <RowDefinition Height="42*"/>
             <RowDefinition Height="39*"/>
-            <RowDefinition Height="132*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="89*"/>
             <RowDefinition Height="59*"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Добавить Заказ" HorizontalAlignment="Center" FontFamily="Comic Sans MS" FontSize="24" Width="188"  Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1"/>
-        <Label Content="Дата заказа" Grid.Row="1"  />
-        <Label Content="Статус" Grid.Row="2" />
-        <Label Content="Выбор товара" Grid.Row="3" />
-        <Label Content="Количкество" Grid.Row="4"/>
-        <Label Content="Стоимость" Grid.Row="5" />
-        <ComboBox ItemsSource="{Binding Combo_StatusId}" SelectedItem="{Binding SelectedStatusId}" Grid.Row="2" Grid.Column="1" FontSize="20">
+        <Label Content="Добавить Заказ" HorizontalAlignment="Left" FontFamily="Comic Sans MS" FontSize="24" Width="188"  Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1" Margin="259,0,0,0"/>
+        <Label Content="Дата заказа" Margin="0,41,0,0" Grid.RowSpan="2"  />
+        <Label Content="Статус" Grid.Row="1" Margin="0,39,0,0" Grid.RowSpan="2" />
+        <Label Content="Выбор товара" Grid.Row="2" Margin="0,42,0,0" Grid.RowSpan="2" />
+        <Label Content="Количкество" Grid.Row="3" Margin="0,40,0,0" Grid.RowSpan="2"/>
+        <Label Content="Стоимость" Grid.Row="4" Margin="0,42,0,0" Grid.RowSpan="2" />
+        <ComboBox ItemsSource="{Binding orderStatuses}" SelectedItem="{Binding ListOrderStatus}" DisplayMemberPath="Name" Grid.Row="1" Grid.Column="1" FontSize="20" Margin="0,39,0,0" Grid.RowSpan="2">
         </ComboBox>
-        <ComboBox ItemsSource="{Binding Combo_ProductId}" SelectedItem="{Binding SelectedProductId}" Grid.Row="3" Grid.Column="1" FontSize="20"/>
-        <TextBox x:Name="TextBox_CreateAt" Grid.Row="1" Grid.Column="1" FontSize="20" Margin="0,1,0,41" Grid.RowSpan="2"/>
-        <TextBox x:Name="TextBox_Count" Grid.Row="4" Grid.Column="1" FontSize="20"/>
-        <TextBox x:Name="TextBox_Cost" Grid.Row="5" Grid.Column="1" FontSize="20"/>
-        <Button Content="Сохранить" Grid.Column="0" Grid.Row="7"  Grid.ColumnSpan="3" Click="Button_Click" />
+        <ComboBox ItemsSource="{Binding products}" SelectedItem="{Binding ListProduct}" DisplayMemberPath="ProductName" Grid.Row="2" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2"/>
+        <TextBox Text="{Binding CreateAt}" Grid.Row="1" Grid.Column="1" FontSize="20" Margin="0,1,0,41" Grid.RowSpan="2"/>
+        <TextBox Text="{Binding CountOrder}" Grid.Row="3" Grid.Column="1" FontSize="20" Margin="0,40,0,0" Grid.RowSpan="2"/>
+        <TextBox Text="{Binding CostOrder}" Grid.Row="4" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2"/>
+        <Button Command="{Binding SaveButton}" Content="Сохранить" Grid.Column="0" Grid.Row="8"  Grid.ColumnSpan="3" Margin="0,4,0,0" />
+        <Label Content="Покупатель" Grid.Row="5" Margin="0,38,0,0" Grid.RowSpan="2" />
+        <ComboBox ItemsSource="{Binding users}" SelectedItem="{Binding ListUser}" DisplayMemberPath="LastName" Grid.Row="5" Grid.Column="1" FontSize="20" Margin="0,39,0,0" Grid.RowSpan="2"/>
     </Grid>
 </Window>

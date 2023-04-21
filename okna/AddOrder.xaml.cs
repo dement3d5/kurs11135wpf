@@ -1,6 +1,9 @@
-﻿using kurs11135.Tools;
+﻿using kurs11135.Models;
+using kurs11135.Tools;
+using kurs11135.VM;
 using System;
-using System.Text.Json;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace kurs11135
@@ -13,24 +16,14 @@ namespace kurs11135
         public AddOrder()
         {
             InitializeComponent();
-           
+            DataContext = new AddOrdVM();
         }
-        public Order SelectedStatusId;
-        public Order SelectedProductId;
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var json = await Api.Post("Order",  new Order
-            {
-                CreateAt = DateTime.Today,
-                Count = TextBox_Count.Text,
-                Cost = decimal.Parse(TextBox_Cost.Text),
-                StatusId = SelectedStatusId.Id,
-                ProductId = SelectedProductId.Id
-            }, "SaveOrder");
-            Order result = Api.Deserialize<Order>(json);
-            MessageBox.Show("ну хз проверь бд");
-        }
-        
+
+
+
+
+
+
 
         //private async void Button_Click(object sender, RoutedEventArgs e)
         //{

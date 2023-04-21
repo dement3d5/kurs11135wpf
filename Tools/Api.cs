@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -18,7 +19,7 @@ namespace kurs11135.Tools
             PropertyNameCaseInsensitive = true
         };
 
-        public static async Task<string> Post(string controller, object body, string method = null)
+        public static async Task<string> Post(string controller, object body, string method)
         {
             try
             {
@@ -38,7 +39,7 @@ namespace kurs11135.Tools
                     return "";
                 }
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 MessageBox.Show(e.Message);
                 return "";

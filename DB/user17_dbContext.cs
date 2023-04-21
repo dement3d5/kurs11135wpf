@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace kurs11135.DB
 {
-    public partial class user_17_dbContext : DbContext
+    public partial class user17_dbContext : DbContext
     {
-        public user_17_dbContext()
+        public user17_dbContext()
         {
         }
 
-        public user_17_dbContext(DbContextOptions<user_17_dbContext> options)
+        public user17_dbContext(DbContextOptions<user17_dbContext> options)
             : base(options)
         {
         }
@@ -37,6 +37,8 @@ namespace kurs11135.DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseCollation("Cyrillic_General_100_CI_AI_SC_UTF8");
+
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.ToTable("Order");
@@ -94,19 +96,16 @@ namespace kurs11135.DB
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.OrderProducts)
                     .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderProduct_ProductCategory");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderProducts)
                     .HasForeignKey(d => d.OrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderProduct_Order");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderProducts)
                     .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderProduct_Product");
             });
 
@@ -144,13 +143,11 @@ namespace kurs11135.DB
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Product_ProductCategory");
 
                 entity.HasOne(d => d.Image)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.ImageId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Product_ProductImage");
             });
 
@@ -203,7 +200,6 @@ namespace kurs11135.DB
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.StatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_User_UserPosition");
             });
 

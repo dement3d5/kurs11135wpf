@@ -14,27 +14,25 @@
             <RowDefinition/>
 
         </Grid.RowDefinitions>
-        <ListView Grid.Row="1"> 
-            <!--ItemsSource="{Binding ZakazisBySelectedList}"-->  
+        <ListView ItemsSource="{Binding products}" SelectedItem="{Binding SelectedItem}" Grid.Row="1"> 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Изображение"/>
-                    <!--DisplayMemberBinding="{Binding Pod}"-->
-                        <GridViewColumn Header="Название Товара"/>
-                        <!--DisplayMemberBinding="{Binding Dtdestination}"-->
-                            <GridViewColumn Header="Описание(Краткое)"/>
-                            <!--DisplayMemberBinding="{Binding Destination}"-->
-                                <GridViewColumn Header="Категория"/>
-                                <!--DisplayMemberBinding="{Binding Dtincome}"-->
-                    <GridViewColumn Header="Стоимость"/>
-                    <!--DisplayMemberBinding="{Binding Price}"-->
+                    <GridViewColumn Header="Изображение" DisplayMemberBinding="{Binding Image.Image}"/>
+
+                    <GridViewColumn Header="Название Товара" DisplayMemberBinding="{Binding ProductName}"/>
+                   
+                    <GridViewColumn Header="Описание(Краткое)" DisplayMemberBinding="{Binding ShortDescription}"/>
+
+                    <GridViewColumn Header="Категория" DisplayMemberBinding="{Binding Category.Name}"/>
+
+                    <GridViewColumn Header="Стоимость" DisplayMemberBinding="{Binding ProductCost}"/>
                 </GridView>
             </ListView.View>
         </ListView>
         <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal">
             <Button Command="{Binding AddProduct}" Content="Добавить" />
-            <Button Content="Редактировать"/>
-            <Button Content="Удалить"/>
+            <Button Command="{Binding EditProduct}" Content="Редактировать"/>
+            <Button Content="Удалить" Command="{Binding DelProduct}"/>
         </StackPanel>
 
     </Grid>

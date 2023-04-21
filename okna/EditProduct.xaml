@@ -1,11 +1,11 @@
-﻿<Window x:Class="kurs11135.AddProduct"
+﻿<Window x:Class="kurs11135.okna.EditProduct"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:kurs11135"
+        xmlns:local="clr-namespace:kurs11135.okna"
         mc:Ignorable="d"
-        Title="AddProduct" Height="450" Width="800">
+        Title="EditProduct" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="140*"/>
@@ -23,19 +23,18 @@
             <RowDefinition Height="59*"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Добавить Товар" HorizontalAlignment="Left" FontFamily="Comic Sans MS" FontSize="24" Width="200"  Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1" Margin="183,0,0,0"/>
+        <Label Content="Редактировать Товар" HorizontalAlignment="Left" FontFamily="Comic Sans MS" FontSize="24" Width="264"  Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1" Margin="138,0,0,0"/>
         <Label Content="Категория" Margin="0,41,0,0" Grid.RowSpan="2"  />
         <Label Content="Название товара" Grid.Row="1" Margin="0,39,0,0" Grid.RowSpan="2" />
         <Label Content="Краткое опиcание" Grid.Row="2" Margin="0,42,0,0" Grid.RowSpan="2" />
         <Label Content="Добавить изображение" Grid.Row="3" Margin="0,40,0,0" Grid.RowSpan="2"/>
         <Label Content="Стоимость" Grid.Row="4" Margin="0,42,0,0" Grid.RowSpan="2" />
-        <ComboBox ItemsSource="{Binding productCategories }" SelectedItem="{Binding ListProductCategory}" DisplayMemberPath="Name" Grid.Column="1" FontSize="20" Margin="0,41,0,0" Grid.RowSpan="2"/>
-        <TextBox Text="{Binding CostProduct}" Grid.Row="4" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2"/>
-        <TextBox Text="{Binding ShortName}" Grid.Row="2" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2"/>
-        <TextBox Text="{Binding NameProduct}" Grid.Row="1" Grid.Column="1" FontSize="20" Margin="0,39,0,0" Grid.RowSpan="2"/>
+        <ComboBox DataContext="{Binding OldListCategory}" ItemsSource="{Binding productCategories }" SelectedItem="{Binding ListProductCategory}" DisplayMemberPath="Name" Grid.Column="1" FontSize="20" Margin="0,41,0,0" Grid.RowSpan="2"/>
+        <TextBox DataContext="{Binding OldCostProduct}" Text="{Binding CostProduct}"  Grid.Row="4" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2"/>
+        <TextBox DataContext="{Binding OldShortName}" Text="{Binding ShortName}" Grid.Row="2" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2"/>
+        <TextBox DataContext="{Binding OldProductName}" Text="{Binding NameProduct}"  Grid.Row="1" Grid.Column="1" FontSize="20" Margin="0,39,0,0" Grid.RowSpan="2"/>
         <Button  Grid.Row="3" Command="{Binding AddImage}" Content="..."  FontSize="20" Grid.Column="1" Margin="0,40,0,0" Grid.RowSpan="2" />
         <Button Command="{Binding SaveButton}" Content="Сохранить" Grid.Column="0" Grid.Row="6"  Grid.ColumnSpan="3" Margin="0,132,0,0" Grid.RowSpan="2" />
-        <Image Grid.Column="2" HorizontalAlignment="Left" Height="207" Margin="67,15,0,0" Source="{Binding Image}" VerticalAlignment="Top" Width="246" Grid.Row="2" Grid.RowSpan="5"/>
-
+        <Image DataContext="{Binding OldImage}" Grid.Column="2" HorizontalAlignment="Left" Height="207" Margin="67,15,0,0" Source="{Binding Image}" VerticalAlignment="Top" Width="246" Grid.Row="2" Grid.RowSpan="5"/>
     </Grid>
 </Window>

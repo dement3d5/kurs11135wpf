@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kurs11135"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="Gray">
+        Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -20,9 +20,9 @@
         <Grid>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
                 <Button Grid.Column="0" Command="{Binding Order}">Заказы</Button>
-                <Button Grid.Column="0" Command="{Binding Order}">Отчеты</Button>
+                <Button Grid.Column="0">Отчеты</Button>
                 <Button Grid.Column="0" Command="{Binding Product}">Список Товара</Button>
-                <Button Grid.Column="1">Выход</Button>
+                <Button Grid.Column="1" Command="{Binding Exit}">Выход</Button>
         </StackPanel>
         </Grid>
           <Frame NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}" Grid.Row="1"/>

@@ -9,47 +9,50 @@ using System.Windows;
 
 namespace kurs11135.VM
 {
-    public class AddProdVM : BaseVM
+    public class EditProdVM : BaseVM
     {
         public CommandVM AddProduct { get; set; }
         public CommandVM AddImage { get; set; }
+        public Product OldProductName { get; set; }
+        public Product OldShortName { get; set; }
+        public Product OldListCategory { get; set; }
+        public Product OldImage { get; set; }
+        public Product OldCostProduct { get; set; }
         public CommandVM SaveButton { get; set; }
         public CommandVM EditProduct { get; set; }
         public Product SelectedItem { get; set; }
-        public CommandVM DelProduct { get; set; }
 
+
+        public CommandVM DelProduct { get; set; }
 
         public byte[]? Image { get => image; set { image = value; Signal(); } }
         public string NameProduct { get; set; }
         public decimal CostProduct { get; set; }
         public string ShortName { get; set; }
- 
-        public AddProdVM()
+
+        public EditProdVM(Product product)
         {
-            SaveButton = new CommandVM( async () =>
+            OldCostProduct = product;
+            OldImage = product;
+            OldShortName = product;
+            OldProductName = product;
+            OldListCategory = product;
+           SaveButton = new CommandVM(async () =>
             {
-                var json3 = await Api.Post("ProductImages", new ProductImage { Image = Image }, "get");
+                var json3 = await Api.Post("ProductImages", new ProductImage { Image = Image }, "put");
                 var image = Api.Deserialize<ProductImage>(json3);
 
 
                 var json1 = await Api.Post("Products", new Product
                 {
+                   
                     CategoryId = ListProductCategory.Id,
                     ProductName = NameProduct,
                     ProductCost = CostProduct,
                     ShortDescription = ShortName,
                     ImageId = image.Id
-                }, "SaveProduct");
-                Product result1 = Api.Deserialize<Product>(json1);
-                MessageBox.Show("вау-вау-вау");
-                if (result1 != null)
-                {
-                    MessageBox.Show("Товар успешно добавлен");
-                }
-                else
-                {
-                    MessageBox.Show("Не удалось добавить товар");
-                }
+  
+                }, "put");
             });
 
             Task.Run(async () =>
@@ -62,10 +65,10 @@ namespace kurs11135.VM
                 new AddProduct().Show();
 
             });
-            AddImage = new CommandVM( async() =>
+            AddImage = new CommandVM(async () =>
             {
                 OpenFileDialog ofd = new();
-                if(ofd.ShowDialog() == true)
+                if (ofd.ShowDialog() == true)
                 {
                     var bytes = File.ReadAllBytes(ofd.FileName);
                     Image = bytes;
@@ -73,16 +76,13 @@ namespace kurs11135.VM
             });
             DelProduct = new CommandVM(async () =>
             {
-                var json1 = await Api.Post("Products", SelectedItem.Id , "delete");
-              
+                var json1 = await Api.Post("Products", SelectedItem.Id, "delete");
+                //var result = Api.Deserialize<Product>(json1);
+                //UpdateList();
             });
 
-            EditProduct = new CommandVM(async () =>
-            {
-                product = SelectedItem; 
-                new EditProduct(product).Show();
-            });
-               
+   
+
         }
         public List<ProductCategory> productCategories { get; set; }
         private ProductCategory listProductCategory;
@@ -109,7 +109,7 @@ namespace kurs11135.VM
             productCategories = result;
             Signal(nameof(productCategories));
 
-            
+
 
 
         }

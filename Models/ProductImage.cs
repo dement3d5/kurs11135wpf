@@ -11,7 +11,7 @@ namespace kurs11135.Models
         }
 
         public int Id { get; set; }
-        public byte[]? Image { get; set; } = null!;
+        public byte[]? Image { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
     }

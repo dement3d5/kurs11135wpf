@@ -26,6 +26,7 @@ namespace kurs11135
             InitializeComponent();
             DataContext = new AddOrdVM();
 
+
         }
 
     }
