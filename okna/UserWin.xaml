@@ -1,0 +1,38 @@
+﻿<Window x:Class="kurs11135.okna.UserWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kurs11135.okna"
+        mc:Ignorable="d"
+        Title="UserWin" Height="450" Width="800">   
+        <Grid>
+            
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <!-- Ширина колонки для навигационного меню -->
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150*"/>
+                <ColumnDefinition Width="150*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+
+        <!-- Навигационное меню слева -->
+            <StackPanel Grid.Column="0" Background="LightGray">
+                <Button Command="{Binding CatalogPage1}"  Content="Каталог" Margin="10" />
+            <Button Command="{Binding CartPage1}" Content="Корзина" Margin="10" />
+            <Button Command="{Binding OrdersPage1}" Content="Заказы" Margin="10"/>
+            </StackPanel>
+
+            <!-- Контентная область справа -->
+
+        <Frame NavigationUIVisibility="Hidden" Grid.Column="1" Content="{Binding CurrentPage}"/>
+
+    </Grid>
+    </Window>
+
+    

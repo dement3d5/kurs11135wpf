@@ -7,14 +7,12 @@ namespace kurs11135.Models
     {
         public ProductCategory()
         {
-            OrderProducts = new HashSet<OrderProduct>();
             Products = new HashSet<Product>();
         }
 
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
+        public string? Name { get; set; }
 
-        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }
 }

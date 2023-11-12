@@ -14,22 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace kurs11135
+namespace kurs11135.Stran
 {
-   //fdsffd
-
     /// <summary>
-    /// Логика взаимодействия для Order.xaml
+    /// Логика взаимодействия для PrixodPage.xaml
     /// </summary>
-    public partial class Order1 : Page
+    public partial class PrixodPage : Page
     {
-        public Order1()
+        public PrixodPage()
         {
             InitializeComponent();
-            DataContext = new AddOrdVM();
-
-
+            DataContext = new AddPrixodVM();
         }
-
     }
 }

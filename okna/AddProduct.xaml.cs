@@ -16,5 +16,6 @@ namespace kurs11135
             DataContext = new AddProdVM();
         }
 
+
     }
 }

@@ -1,4 +1,4 @@
-﻿using kurs11135.VM;
+﻿using kurs11135.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,22 +14,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace kurs11135
+namespace kurs11135.Stran
 {
-   //fdsffd
-
     /// <summary>
-    /// Логика взаимодействия для Order.xaml
+    /// Логика взаимодействия для OrdersPage.xaml
     /// </summary>
-    public partial class Order1 : Page
+    public partial class OrdersPage : Page
     {
-        public Order1()
+        public OrdersPage()
         {
             InitializeComponent();
-            DataContext = new AddOrdVM();
-
-
         }
-
     }
 }

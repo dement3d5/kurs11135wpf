@@ -3,7 +3,9 @@ using kurs11135.okna;
 using kurs11135.Tools;
 using Microsoft.Win32;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -18,38 +20,94 @@ namespace kurs11135.VM
         public Product SelectedItem { get; set; }
         public CommandVM DelProduct { get; set; }
 
+        public List<Product> products { get; set; }
+        public Product product { get; set; }
 
         public byte[]? Image { get => image; set { image = value; Signal(); } }
         public string NameProduct { get; set; }
-        public decimal CostProduct { get; set; }
+
+      
         public string ShortName { get; set; }
- 
+        public string Quantity { get; set; }
+
+
+        public decimal PostavPriсе
+        {
+            get { return _postavPrice; }
+            set
+            {
+                _postavPrice = value;
+                CalculateSellPrice();
+                OnPropertyChanged(nameof(PostavPriсе));
+            }
+        }
+        private decimal _sellPrice;
+        public decimal SellPrice
+        {
+            get { return _sellPrice; }
+            set
+            {
+                if (_sellPrice != value)
+                {
+                    _sellPrice = value;
+                    OnPropertyChanged(nameof(SellPrice));
+                }
+            }
+        }
+
+
+        public decimal Markup
+        {
+            get { return _markup; }
+            set
+            {
+                _markup = value;
+                CalculateSellPrice();
+                OnPropertyChanged(nameof(Markup));
+            }
+        }
+
+        private void CalculateSellPrice()
+        {
+            // Логика вычисления цены продажи по цене поставщика и наценке
+            SellPrice = PostavPriсе * (1 + Markup / 100);
+            OnPropertyChanged(nameof(SellPrice));
+        }
+
+
+
+
+
+
         public AddProdVM()
         {
+
+
+
             SaveButton = new CommandVM( async () =>
             {
                 var json3 = await Api.Post("ProductImages", new ProductImage { Image = Image }, "get");
                 var image = Api.Deserialize<ProductImage>(json3);
-
+                CalculateSellPrice();
 
                 var json1 = await Api.Post("Products", new Product
                 {
                     CategoryId = ListProductCategory.Id,
                     ProductName = NameProduct,
-                    ProductCost = CostProduct,
+                    PostavPriсе = PostavPriсе,
+                    SellPrice = SellPrice,
                     ShortDescription = ShortName,
+                    Markup = (double)Markup,
+                    Quantity = Quantity,
                     ImageId = image.Id
                 }, "SaveProduct");
                 Product result1 = Api.Deserialize<Product>(json1);
-                MessageBox.Show("вау-вау-вау");
-                if (result1 != null)
+                MessageBox.Show("Скорее всего добавилось");
+
+                Task.Run(async () =>
                 {
-                    MessageBox.Show("Товар успешно добавлен");
-                }
-                else
-                {
-                    MessageBox.Show("Не удалось добавить товар");
-                }
+                    await che();
+                });
             });
 
             Task.Run(async () =>
@@ -60,6 +118,10 @@ namespace kurs11135.VM
             AddProduct = new CommandVM(() =>
             {
                 new AddProduct().Show();
+                Task.Run(async () =>
+                {
+                    await che();
+                });
 
             });
             AddImage = new CommandVM( async() =>
@@ -74,19 +136,42 @@ namespace kurs11135.VM
             DelProduct = new CommandVM(async () =>
             {
                 var json1 = await Api.Post("Products", SelectedItem.Id , "delete");
-              
+                Task.Run(async () =>
+                {
+                    await che();
+                });
             });
 
             EditProduct = new CommandVM(async () =>
             {
-                product = SelectedItem; 
+              
+               product = SelectedItem; 
                 new EditProduct(product).Show();
             });
+
+
+            
+
                
         }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+
+
+
+
         public List<ProductCategory> productCategories { get; set; }
         private ProductCategory listProductCategory;
         private byte[]? image;
+        private decimal _postavPrice;
+        private decimal _markup;
+
         public ProductCategory ListProductCategory
         {
             get => listProductCategory;
@@ -96,6 +181,8 @@ namespace kurs11135.VM
                 Signal();
             }
         }
+
+
 
         public async Task che()
         {
@@ -113,8 +200,7 @@ namespace kurs11135.VM
 
 
         }
-        public List<Product> products { get; set; }
-        public Product product { get; set; }
+       
 
 
 

@@ -31,7 +31,6 @@
         </ListView>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
             <Button Command="{Binding AddOrder}" Content="Добавить"/>
-            <Button Content="Редактировать"/>
             <Button Command="{Binding DelOrder}" Content="Удалить"/>
         </StackPanel>
     

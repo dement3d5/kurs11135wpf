@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace kurs11135.DB
 {
-    public partial class user17_dbContext : DbContext
+    public partial class user1Context : DbContext
     {
-        public user17_dbContext()
+        public user1Context()
         {
         }
 
-        public user17_dbContext(DbContextOptions<user17_dbContext> options)
+        public user1Context(DbContextOptions<user1Context> options)
             : base(options)
         {
         }
@@ -31,14 +31,12 @@ namespace kurs11135.DB
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server=192.168.200.35;database=user17_db;user=user17;password=24976");
+                optionsBuilder.UseSqlServer("server=LOCKSMITH; database=user1; user=user1; password=sa");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("Cyrillic_General_100_CI_AI_SC_UTF8");
-
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.ToTable("Order");
@@ -47,17 +45,9 @@ namespace kurs11135.DB
 
                 entity.Property(e => e.Cost).HasColumnType("money");
 
-                entity.Property(e => e.Count)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Count).HasMaxLength(50);
 
                 entity.Property(e => e.CreateAt).HasColumnType("datetime");
-
-                entity.Property(e => e.ProductId).HasColumnName("Product_ID");
-
-                entity.Property(e => e.StatusId).HasColumnName("Status_ID");
-
-                entity.Property(e => e.UserId).HasColumnName("User_ID");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Orders)
@@ -67,13 +57,11 @@ namespace kurs11135.DB
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.StatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_OrderStatus");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_User");
             });
 
@@ -81,22 +69,9 @@ namespace kurs11135.DB
             {
                 entity.ToTable("OrderProduct");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.CategoryId).HasColumnName("Category_ID");
-
-                entity.Property(e => e.Count)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.OrderId).HasColumnName("Order_ID");
-
-                entity.Property(e => e.ProductId).HasColumnName("Product_ID");
-
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.OrderProducts)
-                    .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK_OrderProduct_ProductCategory");
+                entity.Property(e => e.Count).HasMaxLength(50);
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderProducts)
@@ -113,11 +88,7 @@ namespace kurs11135.DB
             {
                 entity.ToTable("OrderStatus");
 
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Name).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -126,19 +97,19 @@ namespace kurs11135.DB
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.CategoryId).HasColumnName("Category_ID");
+                entity.Property(e => e.Markup).HasColumnName("markup");
 
-                entity.Property(e => e.ImageId).HasColumnName("Image_ID");
+                entity.Property(e => e.PostavPriсе).HasColumnType("money");
 
-                entity.Property(e => e.ProductCost).HasColumnType("money");
+                entity.Property(e => e.ProductName).HasMaxLength(50);
 
-                entity.Property(e => e.ProductName)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                entity.Property(e => e.Quantity)
+                    .HasMaxLength(50)
+                    .HasColumnName("quantity");
 
-                entity.Property(e => e.ShortDescription)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                entity.Property(e => e.SellPrice).HasColumnType("money");
+
+                entity.Property(e => e.ShortDescription).HasMaxLength(50);
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
@@ -157,9 +128,7 @@ namespace kurs11135.DB
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.Name)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                entity.Property(e => e.Name).HasMaxLength(50);
             });
 
             modelBuilder.Entity<ProductImage>(entity =>
@@ -167,8 +136,6 @@ namespace kurs11135.DB
                 entity.ToTable("ProductImage");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Image).HasColumnType("image");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -177,25 +144,15 @@ namespace kurs11135.DB
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.FirstName)
-                    .HasMaxLength(100)
-                    .IsFixedLength();
+                entity.Property(e => e.FirstName).HasMaxLength(50);
 
-                entity.Property(e => e.LastName)
-                    .HasMaxLength(100)
-                    .IsFixedLength();
+                entity.Property(e => e.LastName).HasMaxLength(50);
 
-                entity.Property(e => e.Login)
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                entity.Property(e => e.Login).HasMaxLength(50);
 
-                entity.Property(e => e.Organization)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+                entity.Property(e => e.Organization).HasMaxLength(50);
 
-                entity.Property(e => e.Password)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+                entity.Property(e => e.Password).HasMaxLength(50);
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Users)
@@ -207,11 +164,7 @@ namespace kurs11135.DB
             {
                 entity.ToTable("UserPosition");
 
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Title)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+                entity.Property(e => e.Title).HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);

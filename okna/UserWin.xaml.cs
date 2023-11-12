@@ -1,4 +1,5 @@
-﻿using kurs11135.VM;
+﻿using kurs11135.Stran;
+using kurs11135.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,25 +12,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace kurs11135
+namespace kurs11135.okna
 {
-   //fdsffd
-
     /// <summary>
-    /// Логика взаимодействия для Order.xaml
+    /// Логика взаимодействия для UserWin.xaml
     /// </summary>
-    public partial class Order1 : Page
+    public partial class UserWin : Window
     {
-        public Order1()
+        public UserWin()
         {
             InitializeComponent();
-            DataContext = new AddOrdVM();
-
-
+            DataContext = new MainVM();
         }
+
 
     }
 }

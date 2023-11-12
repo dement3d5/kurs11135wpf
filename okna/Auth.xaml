@@ -5,20 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kurs11135"
         mc:Ignorable="d"
-       Title="Регистрация" Height="450" Width="400" MaxHeight="450" MaxWidth="400" Background="#FF767474">
+       Title="Регистрация" MinHeight="450" MinWidth="400" MaxHeight="450" MaxWidth="400" Background="White">
     <Grid>
 
-        <Button Click="Reg" Content="Зарегистрироваться" HorizontalAlignment="Center" Margin="0,313,0,0" VerticalAlignment="Top" Width="242" FontSize="24" Foreground="White" Background="#FF9E9E9E" BorderBrush="White"/>
-        <TextBox Name="txt_Login" HorizontalAlignment="Left" Margin="130,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Height="32" Background="#FF9E9E9E" BorderBrush="White" Foreground="White" FontSize="24"/>
-        <TextBlock HorizontalAlignment="Left" Margin="28,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"><Run Language="ru-ru" Text="Логин"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="28,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"><Run Language="ru-ru" Text="Пароль"/></TextBlock>
-        <TextBox Name="txt_Password"  HorizontalAlignment="Left" Margin="130,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Height="32" Background="#FF9E9E9E" BorderBrush="White" Foreground="White" FontSize="24"/>
-        <TextBox x:Name="txt_Org" HorizontalAlignment="Left" Margin="178,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="182" Height="32" Background="#FF9E9E9E" BorderBrush="White" Foreground="White" FontSize="24"/>
-        <TextBlock HorizontalAlignment="Left" Margin="28,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"><Run Language="ru-ru" Text="Организация"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="28,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"><Run Language="ru-ru" Text="Имя"/></TextBlock>
-        <TextBox x:Name="txt_FirstName"  HorizontalAlignment="Left" Margin="130,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Height="32" Background="#FF9E9E9E" BorderBrush="White" Foreground="White" FontSize="24"/>
-        <TextBlock HorizontalAlignment="Left" Margin="28,235,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"><Run Language="ru-ru" Text="Фамилия"/></TextBlock>
-        <TextBox x:Name="txt_LastName"  HorizontalAlignment="Left" Margin="130,235,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Height="32" Background="#FF9E9E9E" BorderBrush="White" Foreground="White" FontSize="24"/>
+        <Button Click="Reg" Content="Зарегистрироваться" HorizontalAlignment="Center" Margin="0,313,0,0" VerticalAlignment="Top" Width="242" FontSize="24" Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB"/>
+        <TextBox Name="txt_Login" HorizontalAlignment="Left" Margin="148,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Height="32" BorderBrush="#FFC0C0C0" Foreground="White" FontSize="24" FontFamily="Comic Sans MS" Background="Silver"/>
+        <TextBlock Foreground="#FF717070" FontFamily="Comic Sans MS" HorizontalAlignment="Left" Margin="28,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"><Run Language="ru-ru" Text="Логин"/></TextBlock>
+        <TextBlock Foreground="#FF717070" FontFamily="Comic Sans MS" HorizontalAlignment="Left" Margin="28,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"><Run Language="ru-ru" Text="Пароль"/></TextBlock>
+        <TextBox Name="txt_Password"  HorizontalAlignment="Left" Margin="148,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Height="32" BorderBrush="#FFC0C0C0" Foreground="White" FontSize="24" FontFamily="Comic Sans MS" Background="Silver"/>
+        <TextBox x:Name="txt_Org" HorizontalAlignment="Left" Margin="196,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="182" Height="32" BorderBrush="#FFC0C0C0" Foreground="White" FontSize="24" FontFamily="Comic Sans MS" Background="Silver"/>
+        <TextBlock Foreground="#FF717070" FontFamily="Comic Sans MS" HorizontalAlignment="Left" Margin="28,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"><Run Language="ru-ru" Text="Организация"/></TextBlock>
+        <TextBlock Foreground="#FF717070" FontFamily="Comic Sans MS" HorizontalAlignment="Left" Margin="28,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"><Run Language="ru-ru" Text="Имя"/></TextBlock>
+        <TextBox x:Name="txt_FirstName"  HorizontalAlignment="Left" Margin="148,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Height="32" BorderBrush="#FFC0C0C0" Foreground="White" FontSize="24" FontFamily="Comic Sans MS" Background="Silver"/>
+        <TextBlock Foreground="#FF717070" FontFamily="Comic Sans MS" HorizontalAlignment="Left" Margin="28,235,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"><Run Language="ru-ru" Text="Фамилия"/></TextBlock>
+        <TextBox x:Name="txt_LastName"  HorizontalAlignment="Left" Margin="148,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Height="32" BorderBrush="#FFC0C0C0" Foreground="White" FontSize="24" FontFamily="Comic Sans MS" Background="Silver"/>
 
     </Grid>
 </Window>

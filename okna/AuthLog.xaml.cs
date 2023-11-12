@@ -31,33 +31,40 @@ namespace kurs11135.okna
             string login = txt_Login.Text;
             string password = txt_Password.Text;
             var json = await Api.Post("Users", new User { Login = login, Password = password }, "Auth");
-            var user= Api.Deserialize<User>(json);
-            bool isLogin = false, isEditUser = false;
+            var user = Api.Deserialize<User>(json);
+            bool isLogin = false;
+            if (user.Id == 0)
             {
-                if (user.Id == 0)
+                MessageBox.Show("Такого пользователя не существует!!", $"Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                isLogin = true;
+            }
+
+            if (isLogin)
+            {
+                if (user.StatusId != null)
                 {
-                    
-                    MessageBox.Show("Такого пользователя не существует!!", $"ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                else
-                { 
-                    isLogin = true;
-                }
-                if (isLogin)
-                {
-                    if (isEditUser)
-           
-                    MessageBox.Show("Вы успешно вошли!", "Успешно!", MessageBoxButton.OK, MessageBoxImage.Information);
                     MainWindow main = new MainWindow();
                     Close();
                     main.Show();
                 }
-                else 
+                else
                 {
-                    MessageBox.Show("Ошибка!", $"Неверный логин или пароль!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    UserWin userWin = new UserWin();
+                    Close();
+                    userWin.Show();
                 }
+                MessageBox.Show("Вы успешно вошли!", "Успешно!", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Ошибка!", $"Неверный логин или пароль!", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+
         private void Reg(object sender, RoutedEventArgs e)
         {
             Auth m = new Auth();
@@ -65,5 +72,7 @@ namespace kurs11135.okna
             this.Close();
 
         }
+
     }
+
 }

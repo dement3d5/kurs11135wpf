@@ -1,4 +1,5 @@
-﻿using kurs11135.VM;
+﻿using kurs11135.Models;
+using kurs11135.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,25 +12,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace kurs11135
+namespace kurs11135.okna
 {
-   //fdsffd
-
     /// <summary>
-    /// Логика взаимодействия для Order.xaml
+    /// Логика взаимодействия для EditOrder.xaml
     /// </summary>
-    public partial class Order1 : Page
+    public partial class EditOrder : Window
     {
-        public Order1()
+        public EditOrder(Order order)
         {
             InitializeComponent();
-            DataContext = new AddOrdVM();
-
-
+            DataContext = new EditOrderVM(order);
         }
-
     }
 }
