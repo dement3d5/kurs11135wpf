@@ -1,4 +1,6 @@
-﻿using kurs11135.Stran;
+﻿using kurs11135.Models;
+using kurs11135.okna;
+using kurs11135.Stran;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +12,7 @@ namespace kurs11135.Tools
         public Page currentPage;
         public CommandVM Order { get; set; }
         public CommandVM Product { get; set; }
-        public CommandVM Exit { get; set; }
+        public CommandVM Logout { get; set; }
         public CommandVM Invoice { get; set; }
         public CommandVM CartPage1 { get; set; }
         public CommandVM CatalogPage1 { get; set; } 
@@ -23,6 +25,38 @@ namespace kurs11135.Tools
                 currentPage = value;
                 Signal();
             }
+        }
+        private User user = new User();
+        private Visibility loggedIn = Visibility.Collapsed;
+        public Visibility LoggedIn
+        {
+            get => loggedIn;
+            set
+            {
+                loggedIn = value;
+                Signal();
+            }
+        }
+        public User User
+        {
+            get => user;
+            set
+            {
+                user = value;
+                LoggedIn = Visibility.Visible;           
+                Signal("UserDoc");     
+                Signal("Role");       
+            }
+        }
+
+        public string Role
+        {
+            get => user.Status?.Title;
+        }
+
+        public string UserDoc
+        {
+            get => $"{user.FirstName} {user.LastName} {user.Organization}";
         }
 
         public MainVM()
@@ -60,13 +94,13 @@ namespace kurs11135.Tools
                 CurrentPage = new Product1();
             });
 
-            Exit = new CommandVM(() =>
+            Logout = new CommandVM(() =>
             {
                 MessageBoxResult Result = MessageBox.Show("Закрыть приложение ?", "Уведомление", MessageBoxButton.YesNo);
                 if (Result == MessageBoxResult.Yes)
                 {
-                    Application.Current.Shutdown();
-
+                    AuthLog log = new AuthLog();
+                    log.Show(); 
                 }
                 else if (Result == MessageBoxResult.No)
                 {
