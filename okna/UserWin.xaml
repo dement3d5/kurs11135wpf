@@ -5,16 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kurs11135.okna"
         mc:Ignorable="d"
-        Title="UserWin" Height="450" Width="800">   
-        <Grid>
-            
-            
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
-                <!-- Ширина колонки для навигационного меню -->
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+        Title="UserWin" Height="450" Width="800">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="118"/>
+            <ColumnDefinition Width="209*" />
+            <ColumnDefinition Width="196*"/>
+            <ColumnDefinition Width="277*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Column="0" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150*"/>
                 <ColumnDefinition Width="150*"/>
@@ -22,17 +27,21 @@
         </Grid>
 
         <!-- Навигационное меню слева -->
-            <StackPanel Grid.Column="0" Background="LightGray">
-                <Button Command="{Binding CatalogPage1}"  Content="Каталог" Margin="10" />
+        <StackPanel Grid.Column="0" Background="LightGray" Grid.RowSpan="2">
+            <Button Command="{Binding CatalogPage1}"  Content="Каталог" Margin="10" />
             <Button Command="{Binding CartPage1}" Content="Корзина" Margin="10" />
             <Button Command="{Binding OrdersPage1}" Content="Заказы" Margin="10"/>
-            </StackPanel>
+        </StackPanel>
+        <Label VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Center" Content="Mагазин бытовой химии" Height="31" Width="196" Grid.Column="2"  />
 
-            <!-- Контентная область справа -->
+        <!-- Контентная область справа -->
+        <Frame x:Name="mainFrame"
+               NavigationUIVisibility="Hidden"
+               Content="{Binding CurrentPage}" 
+               Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"/>
 
-        <Frame NavigationUIVisibility="Hidden" Grid.Column="1" Content="{Binding CurrentPage}"/>
 
     </Grid>
-    </Window>
+</Window>
 
     

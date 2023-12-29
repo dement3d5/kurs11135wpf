@@ -2,6 +2,7 @@
 using kurs11135.okna;
 using kurs11135.Stran;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -27,36 +28,22 @@ namespace kurs11135.Tools
             }
         }
         private User user = new User();
-        private Visibility loggedIn = Visibility.Collapsed;
-        public Visibility LoggedIn
-        {
-            get => loggedIn;
-            set
-            {
-                loggedIn = value;
-                Signal();
-            }
-        }
         public User User
         {
             get => user;
             set
             {
                 user = value;
-                LoggedIn = Visibility.Visible;           
-                Signal("UserDoc");     
-                Signal("Role");       
+                Signal("UserName");
+                    
+                
             }
         }
 
-        public string Role
-        {
-            get => user.Status?.Title;
-        }
 
-        public string UserDoc
+        public string UserName
         {
-            get => $"{user.FirstName} {user.LastName} {user.Organization}";
+            get => $"{User.FirstName} {User.LastName}";
         }
 
         public MainVM()

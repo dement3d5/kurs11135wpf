@@ -12,7 +12,7 @@
         <ListView Background="#FF9E6363" ItemsSource="{Binding products}" SelectedItem="{Binding SelectedItem}" Grid.Row="1">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Изображение" >
+                    <GridViewColumn Header="Изображение">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -28,7 +28,19 @@
 
                     <GridViewColumn Header="Категория" DisplayMemberBinding="{Binding Category.Name}"/>
 
-                    <GridViewColumn Header="Стоимость" DisplayMemberBinding="{Binding ProductCost}"/>
+                    <GridViewColumn Header="Количество">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="MIN" Command="{Binding DataContext.MinQuantityCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding}"/>
+                                    <Button Content="-" Command="{Binding DataContext.DecreaseQuantityCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding}"/>
+                                    <TextBlock Text="{Binding Quantity}"/>
+                                    <Button Content="+" Command="{Binding DataContext.IncreaseQuantityCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding}"/>
+                                    <Button Content="MAX" Command="{Binding DataContext.MaxQuantityCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

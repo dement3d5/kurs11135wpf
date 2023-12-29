@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:kurs11135"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -22,15 +21,9 @@
                 <Button Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Grid.Column="0" Command="{Binding Order}" Width="83" Height="43">Заказы</Button>
                 <Button Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Grid.Column="0" Width="68" Height="43">Отчеты</Button>
                 <Button Grid.Column="0" Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Command="{Binding Product}" Width="94" Height="43">Список Товара</Button>
-                <!--<Button Grid.Column="0" Command="{Binding Invoice}">Приходная накладная</Button>-->
             </StackPanel>
             <Label VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Left" Content="Учет продаж магазина бытовой химии" Height="31" Width="287" Grid.ColumnSpan="3" Margin="15,0,0,0" Grid.Column="1" />
-            <StackPanel Grid.Column="3" Visibility="{Binding LoggedIn}">
-                <Label Content="Авторизованный пользователь:" />
-                <Label Content="{Binding UserDoc}"/>
-                <Label Content="{Binding Role}"/>
-                <Button Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Content="Выход" Command="{Binding Logout}"/>
-            </StackPanel>
+
         </Grid>
         <Frame x:Name="mainFrame"
                NavigationUIVisibility="Hidden"

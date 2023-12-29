@@ -3,11 +3,13 @@ using kurs11135.okna;
 using kurs11135.Tools;
 using Microsoft.Win32;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace kurs11135.VM
 {
@@ -38,7 +40,7 @@ namespace kurs11135.VM
             {
                 _postavPrice = value;
                 CalculateSellPrice();
-                OnPropertyChanged(nameof(PostavPriсе));
+                Signal(nameof(PostavPriсе));
             }
         }
         private decimal _sellPrice;
@@ -50,7 +52,7 @@ namespace kurs11135.VM
                 if (_sellPrice != value)
                 {
                     _sellPrice = value;
-                    OnPropertyChanged(nameof(SellPrice));
+                    Signal(nameof(SellPrice));
                 }
             }
         }
@@ -63,7 +65,7 @@ namespace kurs11135.VM
             {
                 _markup = value;
                 CalculateSellPrice();
-                OnPropertyChanged(nameof(Markup));
+                Signal(nameof(Markup));
             }
         }
 
@@ -71,18 +73,14 @@ namespace kurs11135.VM
         {
             // Логика вычисления цены продажи по цене поставщика и наценке
             SellPrice = PostavPriсе * (1 + Markup / 100);
-            OnPropertyChanged(nameof(SellPrice));
+            Signal(nameof(SellPrice));
         }
-
-
-
-
 
 
         public AddProdVM()
         {
-
-
+          
+           
 
             SaveButton = new CommandVM( async () =>
             {
@@ -154,12 +152,7 @@ namespace kurs11135.VM
 
                
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+      
 
 
 
@@ -182,7 +175,7 @@ namespace kurs11135.VM
             }
         }
 
-
+    
 
         public async Task che()
         {

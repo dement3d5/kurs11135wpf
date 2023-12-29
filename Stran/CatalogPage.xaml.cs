@@ -22,11 +22,16 @@ namespace kurs11135.Stran
     /// </summary>
     public partial class CatalogPage : Page
     {
+       
+
         public CatalogPage()
         {
             InitializeComponent();
-            DataContext = new AddProdVM();
+            DataContext = new CatalogVM();
 
         }
+   
     }
 }
+        
+
