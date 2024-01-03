@@ -16,6 +16,22 @@ namespace kurs11135.VM
     class CatalogVM : BaseVM
     {
 
+
+        private int _quantity;
+
+        public int Quantity
+        {
+            get => _quantity;
+            set
+            {
+                if (_quantity != value)
+                {
+                    _quantity = value;
+                    Signal(nameof(Quantity));
+                }
+            }
+        }
+
         public Product SelectedItem { get; set; }
         public List<Product> products { get; set; }
         public Product product { get; set; }
@@ -26,103 +42,84 @@ namespace kurs11135.VM
         public byte[]? Image { get => image; set { image = value; Signal(); } }
         public string NameProduct { get; set; }
         public string ShortName { get; set; }
-        public string Quantity { get; set; }
 
 
-        private void MinButton_Click(object sender, RoutedEventArgs e)
+
+
+        public ICommand MinQuantityCommand { get; set; }
+        public ICommand DecreaseQuantityCommand { get; set; }
+        public ICommand IncreaseQuantityCommand { get; set; }
+        public ICommand MaxQuantityCommand { get; set; }
+
+        private void SetMinQuantity(Product product)
         {
-            
-        }
-
-        private void DecrementButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void EqualButton_Click(object sender, RoutedEventArgs e)
-        {
-            //// Логика присваивания определенного значения количеству
-            //// Пример:
-            //int newValue = 10; // Присваиваем 10, например
-            //Quantity = newValue.ToString();
-        }
-
-        private void MaxButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        public ICommand MinQuantityCommand { get; }
-        public ICommand DecreaseQuantityCommand { get; }
-        public ICommand IncreaseQuantityCommand { get; }
-        public ICommand MaxQuantityCommand { get; }
-
-
-
-        private void MinQuantity(Product product)
-        {
-            // Логика уменьшения количества
-            // Пример:
-            int currentQuantity = int.Parse(Quantity); // Предполагается, что Quantity может быть преобразован в int
-            if (currentQuantity > 0)
+            Quantity = 1;
+            Task.Run(async () =>
             {
-                currentQuantity--;
-                Quantity = currentQuantity.ToString();
-                Signal();
-            }
+                await che();
+            });
         }
-
         private void DecreaseQuantity(Product product)
         {
-            // Логика уменьшения количества на более произвольное значение
-            // Пример:
-            int currentQuantity = int.Parse(Quantity); // Предполагается, что Quantity может быть преобразован в int
-            int decrementValue = 5; // Уменьшение на 5, например
-            if (currentQuantity >= decrementValue)
+            if (Quantity > 1)
             {
-                currentQuantity -= decrementValue;
-                Quantity = currentQuantity.ToString();
-                Signal();
+                Quantity--;
+                Task.Run(async () =>
+                {
+                    await che();
+                });
             }
-            Signal();
+            else
+            {
+                MessageBox.Show("Ошибка: Количество не может быть меньше 1");
+                Task.Run(async () =>
+                {
+                    await che();
+                });
+            }
         }
-
         private void IncreaseQuantity(Product product)
         {
-            int currentQuantity = int.Parse(Quantity); // Предполагается, что Quantity может быть преобразован в int
-            int decrementValue = 5; // Уменьшение на 5, например
-            if (currentQuantity <= decrementValue)
+
+            Quantity++;
+            Task.Run(async () =>
             {
-                currentQuantity += decrementValue;
-                Quantity = currentQuantity.ToString();
-                Signal();
+                await che();
+            });
+        }
+        private void SetMaxQuantity(Product product)
+        {
+            // Предположим, что у вас есть переменная maxQuantity, содержащая максимальное значение Quantity из базы данных
+            int maxQuantity = 100; // Пример максимального значения из базы данных
+
+            if (Quantity < maxQuantity)
+            {
+                Quantity = maxQuantity;
+                Task.Run(async () =>
+                {
+                    await che();
+                });
             }
-            Signal();
+            else
+            {
+                MessageBox.Show($"Ошибка: На складе имеется максимальное количество товара ({Quantity})");
+                Task.Run(async () =>
+                {
+                    await che();
+                });
+            }
+            Task.Run(async () =>
+            {
+                await che();
+            });
         }
 
-        private void MaxQuantity(Product product)
+        public CatalogVM()
         {
-            // Логика установки максимального значения количества
-            // Пример:
-            int maxValue = 100; // Максимальное значение
-            Quantity = maxValue.ToString();
-            Signal();
-        }
-
-
-
-
-
-
-
-            public CatalogVM()
-        {
-            MinQuantityCommand = new RelayCommand<Product>(MinQuantity); Signal();
-            DecreaseQuantityCommand = new RelayCommand<Product>(DecreaseQuantity); Signal();
-            IncreaseQuantityCommand = new RelayCommand<Product>(IncreaseQuantity); Signal();
-            MaxQuantityCommand = new RelayCommand<Product>(MaxQuantity); Signal();
-
-
+            MinQuantityCommand = new RelayCommand<Product>(SetMinQuantity);
+            DecreaseQuantityCommand = new RelayCommand<Product>(DecreaseQuantity);
+            IncreaseQuantityCommand = new RelayCommand<Product>(IncreaseQuantity);
+            MaxQuantityCommand = new RelayCommand<Product>(SetMaxQuantity);
 
             Task.Run(async () =>
             {
@@ -130,7 +127,11 @@ namespace kurs11135.VM
             });
 
 
+
+
+
         }
+
         public async Task che()
         {
             string json1 = await Api.Post("Products", null, "get");

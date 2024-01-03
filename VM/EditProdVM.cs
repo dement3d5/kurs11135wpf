@@ -23,27 +23,115 @@ namespace kurs11135.VM
 
         public CommandVM DelProduct { get; set; }
 
-        public byte[]? Image { get => image; set { image = value; Signal(); } }
-        public string NameProduct { get; set; }
-        public string ShortName { get; set; }
-        public decimal PostavPriсе { get; set; }
-        public decimal SellPrice { get; set; }
-
-
-        public EditProdVM(Product product)
+        public byte[]? Image
         {
+            get => image;
+            set
+            {
+                image = value;
+                Signal(nameof(Image));
+            }
+        }
+
+        public string NameProduct
+        {
+            get => product?.ProductName;
+            set
+            {
+                if(product != null)
+                {
+                    product.ProductName = value;
+                    Signal();
+                }
+            }
+
+        }
+        public string ShortName
+        {
+            get => product?.ProductName;
+            set
+            {
+                if (product != null)
+                {
+                    product.ProductName = value;
+                    Signal();
+                }
+            }
+
+        }
+        public decimal PostavPriсе
+        {
+            get => (decimal)(product?.PostavPriсе);
+            set
+            {
+                if (product != null)
+                {
+                    product.PostavPriсе = value;
+                    Signal();
+                }
+            }
+
+        }
+        public decimal SellPrice
+        {
+            get => (decimal)(product?.SellPrice);
+            set
+            {
+                if (product != null)
+                {
+                    product.SellPrice = value;
+                    Signal();
+                }
+            }
+
+        }
+
+        public string Quantity
+        {
+            get => product?.Quantity;
+            set
+            {
+                if (product != null)
+                {
+                    product.Quantity = value;
+                    Signal();
+                }
+            }
+
+        }
+        public float Markup
+        {
+            get => (float)(product?.Markup);
+            set
+            {
+                if (product != null)
+                {
+                    product.Markup = value;
+                    Signal();
+                }
+            }
+
+        }
+
+
+
+        public EditProdVM(Product selectedProduct)
+        {
+           product = selectedProduct;
             SaveButton = new CommandVM(async () =>
              {
-                 var json3 = await Api.Post("ProductImages", new ProductImage { Id = product.Image.Id, Image = Image }, "put");
+                 var json3 = await Api.Post("ProductImages", new ProductImage { Id = selectedProduct.Image.Id, Image = Image }, "put");
                  var json1 = await Api.Post("Products", new Product
                  {
-                     Id = product.Id,
+                     Id = selectedProduct.Id,
                      CategoryId = ListProductCategory.Id,
                      ProductName = NameProduct,
                      PostavPriсе = PostavPriсе,
+                     Quantity = Quantity,
+                     Markup = Markup,
                      SellPrice = SellPrice,
                      ShortDescription = ShortName,
-                     ImageId = product.ImageId
+                     ImageId = selectedProduct.ImageId
                  }, "put");
 
              });
@@ -89,17 +177,22 @@ namespace kurs11135.VM
                 Signal();
             }
         }
-        private ProductCategory listProductCategory;
+
         private byte[]? image;
         private List<ProductCategory> productCategory;
 
         public ProductCategory ListProductCategory
         {
-            get => listProductCategory;
+            get => product.Category;
             set
             {
-                listProductCategory = value;
-                Signal();
+                if(product != null)
+                {
+                    product.Category = value;
+                  
+                    Signal(nameof(ListProductCategory));
+
+                }
             }
         }
 
