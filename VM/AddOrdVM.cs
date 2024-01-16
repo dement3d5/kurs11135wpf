@@ -112,7 +112,7 @@ namespace kurs11135.VM
             set
             {
                 quantity = value;
-                Signal(); // Вызовите PropertyChanged чтобы обновить UI
+                Signal();
             }
         }
 
@@ -203,10 +203,10 @@ namespace kurs11135.VM
             });
         }
 
-        //
+        //как блять комитнуть
         private void CalculateSellPrice()
         {
-            // Обновление общей стоимости заказа
+
             CostOrder = SelectedProducts.Sum(op => op.Product.SellPrice * int.Parse(op.Count));
             Signal(nameof(CostOrder));
         }
@@ -236,7 +236,7 @@ namespace kurs11135.VM
             users = result3;
             Signal(nameof(users));
         }
-
+        //как блять комитнуть
 
         //public void UpdateList()
         //{

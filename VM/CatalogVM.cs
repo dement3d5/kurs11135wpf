@@ -63,28 +63,24 @@ namespace kurs11135.VM
             if (Quantity > 0)
             {
                 Quantity--;
-                // Здесь должна быть логика обновления количества товара в базе данных
+         
             }
         }
         private bool CanDecreaseQuantity() => Quantity > 0;
 
         private void IncreaseQuantityAction()
         {
-            if (Quantity < GetMaxQuantity()) // Функция GetMaxQuantity() должна возвращать макс. кол-во товара из БД
+            if (Quantity < GetMaxQuantity()) 
             {
                 Quantity++;
-                // Здесь должна быть логика обновления количества товара в базе данных
+
             }
         }
         private bool CanIncreaseQuantity() => Quantity < GetMaxQuantity();
 
         private int GetMaxQuantity()
         {
-            // Этот метод должен получать максимальное количество товара из БД для SelectedProduct
-            // В этом примере предполагается, что метод Quantity из модели Product возвращает integer.
 
-            // Здесь временный код, вам нужно реализовать логику получения данных из БД.
-            // Если поле Quantity модели Product - это строка, вам нужно будет её преобразовать в int
             return SelectedItem != null && int.TryParse(SelectedItem.Quantity, out int maxQuantity) ? maxQuantity : 0;
         }
 

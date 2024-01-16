@@ -71,7 +71,7 @@ namespace kurs11135.VM
 
         private void CalculateSellPrice()
         {
-            // Логика вычисления цены продажи по цене поставщика и наценке
+
             SellPrice = PostavPriсе * (1 + Markup / 100);
             Signal(nameof(SellPrice));
         }
