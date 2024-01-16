@@ -203,7 +203,7 @@ namespace kurs11135.VM
             });
         }
 
-
+        //
         private void CalculateSellPrice()
         {
             // Обновление общей стоимости заказа
