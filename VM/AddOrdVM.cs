@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Windows;
 using kurs11135.okna;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.Reflection.Metadata;
 
 namespace kurs11135.VM
 {
@@ -37,7 +40,7 @@ namespace kurs11135.VM
             set
             {
                 listOrder = value;
-                Signal();
+                Signal(nameof(ListOrder));
             }
         }
 
@@ -80,33 +83,107 @@ namespace kurs11135.VM
         public CommandVM DelOrder { get; set; }
         public CommandVM EditOrder { get; }
         public decimal CostOrder { get; set; }
-        public string CountOrder { get; set; }
+        public string Count { get; set; }
 
+        public CommandVM AddProductToOrderCommand { get;}
+        public ObservableCollection<OrderProduct> SelectedProducts { get; set; } = new ObservableCollection<OrderProduct>();
+
+
+        private void OnAddProductToOrder(Product selectedProduct, string quantity)
+        {
+            if (selectedProduct != null && int.TryParse(quantity, out int count))
+            {
+                SelectedProducts.Add(new OrderProduct
+                {
+                    ProductId = selectedProduct.Id,
+                    Count = quantity,
+                    Product = selectedProduct
+                });
+
+                CalculateSellPrice();
+            }
+        }
+
+        private string quantity;
+
+        public string Quantity
+        {
+            get => quantity;
+            set
+            {
+                quantity = value;
+                Signal(); // Вызовите PropertyChanged чтобы обновить UI
+            }
+        }
+
+
+   
 
         public AddOrdVM()
         {
+
+
+
+
+            AddProductToOrderCommand = new CommandVM(() =>
+            {
+                OnAddProductToOrder(ListProduct, Quantity);
+            });
+
+
+
             SaveButton = new CommandVM(async () =>
             {
-                var json = await Api.Post("Orders", new Order
+                if (SelectedProducts != null && SelectedProducts.Any())
                 {
-         
-                    CreateAt = CreateAt,
-                    Count = CountOrder,
-                    Cost = CostOrder,
-                    StatusId = ListOrderStatus.Id,
-                    Status = ListOrderStatus,
-                    ProductId = ListProduct.Id,
-                    UserId = ListUser.Id,
-                    User = ListUser
-                }, "SaveOrder");
-                Order result = Api.Deserialize<Order>(json);
+                    CalculateSellPrice();
+                    var json = await Api.Post("Orders", new Order
+                    {
+                        CreateAt = CreateAt,
+                        Cost = CostOrder,
+                        OrderProducts = SelectedProducts.ToList()
+                    }, "SaveOrder");
+                    var result = Api.Deserialize<Order>(json);
              
+                    if (result != null)
+                    {
+                        MessageBox.Show("Заказ успешно оформлен.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ошибка при сохранении заказа.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Не выбраны товары для заказа.");
+                }
+            });
 
-            });
-                Task.Run(async () =>
-            {
-                await che();
-            });
+
+
+            //SaveButton = new CommandVM(async () =>
+            //{
+
+            //    if (SelectedProducts != null && SelectedProducts.Count > 0)
+            //    {
+            //        var json = await Api.Post("Orders", new Order
+            //        {
+            //            CreateAt = CreateAt,
+            //            Cost = CostOrder,
+            //            ProductId = ListProduct.Id,
+            //            Count = CountOrder,
+            //            OrderProducts = new List<OrderProduct>(SelectedProducts)
+            //        }, "SaveOrder");
+            //        Order result = Api.Deserialize<Order>(json);
+            //    }
+
+            //});
+
+            Task.Run(async () =>
+        {
+            await che();
+        });
             AddOrder = new CommandVM(() =>
             {
                 new AddOrder().Show();
@@ -125,6 +202,18 @@ namespace kurs11135.VM
                 new EditOrder(order).Show();
             });
         }
+
+
+        private void CalculateSellPrice()
+        {
+            // Обновление общей стоимости заказа
+            CostOrder = SelectedProducts.Sum(op => op.Product.SellPrice * int.Parse(op.Count));
+            Signal(nameof(CostOrder));
+        }
+
+
+
+
         public async Task che()
         {
             var json = await Api.Post("OrderStatus", null, "get");

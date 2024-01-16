@@ -9,7 +9,7 @@
       Title="CatalogPage">
 
     <Grid>
-        <ListView Background="#FF9E6363" ItemsSource="{Binding products}" SelectedItem="{Binding SelectedItem}" Grid.Row="1">
+        <ListView ItemsSource="{Binding products}" SelectedItem="{Binding SelectedItem}" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Изображение">
@@ -27,21 +27,14 @@
                     <GridViewColumn Header="Описание(Краткое)" DisplayMemberBinding="{Binding ShortDescription}"/>
 
                     <GridViewColumn Header="Категория" DisplayMemberBinding="{Binding Category.Name}"/>
+                    
+                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Quantity}"/>
 
-                    <GridViewColumn Header="Количество">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Content="Мин" Command="{Binding DataContext.MinQuantityCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" CommandParameter="{Binding}"/>
-                                    <Button Content="-" Command="{Binding DataContext.DecreaseQuantityCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" CommandParameter="{Binding}"/>
-                                    <!-- Добавлен TextBlock для отображения текущего значения Quantity -->
-                                    <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="5"/>
-                                    <Button Content="+" Command="{Binding DataContext.IncreaseQuantityCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" CommandParameter="{Binding}"/>
-                                    <Button Content="Макс" Command="{Binding DataContext.MaxQuantityCommand, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" CommandParameter="{Binding}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    <GridViewColumn Header="Цена\шт." DisplayMemberBinding="{Binding SellPrice}"/>
+                    
+                    
+
+
                 </GridView>
             </ListView.View>
         </ListView>

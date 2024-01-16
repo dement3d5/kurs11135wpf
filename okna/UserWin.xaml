@@ -29,8 +29,8 @@
         <!-- Навигационное меню слева -->
         <StackPanel Grid.Column="0" Background="LightGray" Grid.RowSpan="2">
             <Button Command="{Binding CatalogPage1}"  Content="Каталог" Margin="10" />
-            <Button Command="{Binding CartPage1}" Content="Корзина" Margin="10" />
             <Button Command="{Binding OrdersPage1}" Content="Заказы" Margin="10"/>
+            <Button Command="{Binding ProfilePage1}" Content="Профиль" Margin="10"/>
         </StackPanel>
         <Label VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Center" Content="Mагазин бытовой химии" Height="31" Width="196" Grid.Column="2"  />
 

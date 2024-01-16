@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:kurs11135.okna"
         mc:Ignorable="d"
         Title="Авторизация" MinHeight="250" MinWidth="650" MaxHeight="250" MaxWidth="650" Background="White" Foreground="{x:Null}">
-    <Grid>
+    <Grid x:Name="mainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition/>

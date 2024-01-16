@@ -1,4 +1,5 @@
-﻿using kurs11135.Stran;
+﻿using kurs11135.Models;
+using kurs11135.Stran;
 using kurs11135.Tools;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,11 @@ namespace kurs11135.okna
     /// </summary>
     public partial class UserWin : Window
     {
-        public UserWin()
+        public UserWin(User user)
         {
             InitializeComponent();
-            DataContext = new MainVM();
+           
+            DataContext = new MainVM(user);
         }
 
 

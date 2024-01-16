@@ -80,6 +80,8 @@ namespace kurs11135.VM
         public AddProdVM()
         {
           
+
+
            
 
             SaveButton = new CommandVM( async () =>
@@ -134,10 +136,8 @@ namespace kurs11135.VM
             DelProduct = new CommandVM(async () =>
             {
                 var json1 = await Api.Post("Products", SelectedItem.Id , "delete");
-                Task.Run(async () =>
-                {
-                    await che();
-                });
+                che();
+
             });
 
             EditProduct = new CommandVM(async () =>
@@ -145,6 +145,7 @@ namespace kurs11135.VM
               
                product = SelectedItem; 
                 new EditProduct(product).Show();
+               
             });
 
 

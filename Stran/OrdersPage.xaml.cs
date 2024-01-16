@@ -1,4 +1,5 @@
 ﻿using kurs11135.Tools;
+using kurs11135.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,9 @@ namespace kurs11135.Stran
         public OrdersPage()
         {
             InitializeComponent();
+            DataContext = new AddOrdVM();
         }
+
+
     }
 }

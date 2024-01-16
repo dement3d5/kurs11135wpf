@@ -1,4 +1,5 @@
 ﻿using kurs11135.Models;
+using kurs11135.Stran;
 using kurs11135.Tools;
 using System;
 using System.Collections.Generic;
@@ -44,15 +45,16 @@ namespace kurs11135.okna
 
             if (isLogin)
             {
+              
                 if (user.StatusId != null)
                 {
-                    MainWindow main = new MainWindow();
+                    MainWindow main = new MainWindow(user);
                     Close();
                     main.Show();
                 }
                 else
                 {
-                    UserWin userWin = new UserWin();
+                    UserWin userWin = new UserWin(user);
                     Close();
                     userWin.Show();
                 }
@@ -64,6 +66,8 @@ namespace kurs11135.okna
             }
         }
 
+
+      
 
         private void Reg(object sender, RoutedEventArgs e)
         {

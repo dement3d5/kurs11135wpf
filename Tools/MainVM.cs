@@ -18,6 +18,7 @@ namespace kurs11135.Tools
         public CommandVM CartPage1 { get; set; }
         public CommandVM CatalogPage1 { get; set; } 
         public CommandVM OrdersPage1 { get; set; }
+        public CommandVM ProfilePage1 { get; set; }
         public Page CurrentPage
         {
             get => currentPage;
@@ -46,8 +47,9 @@ namespace kurs11135.Tools
             get => $"{User.FirstName} {User.LastName}";
         }
 
-        public MainVM()
+        public MainVM(User user)
         {
+            User = user;
             CurrentPage = new hiPage(this);
             Invoice = new CommandVM(() =>
             {
@@ -73,6 +75,10 @@ namespace kurs11135.Tools
             {
                 CurrentPage = new OrdersPage();
 
+            });
+            ProfilePage1 = new CommandVM(() =>
+            {
+                CurrentPage = new ProfilePage1(User);
             });
 
 

@@ -34,7 +34,7 @@
         <ComboBox ItemsSource="{Binding productCategories }" SelectedItem="{Binding ListProductCategory}" DisplayMemberPath="Name" Grid.Column="1" FontSize="20" Margin="0,41,0,0" Grid.RowSpan="2"/>
         <TextBox Text="{Binding PostavPriсе, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2" />
         <TextBox Text="{Binding Markup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2"/>
-        <TextBox Text="{Binding SellPrice, Mode=OneWay}" Grid.Row="7" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2" />
+        <TextBlock Text="{Binding SellPrice, Mode=OneWay}" Grid.Row="7" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2" />
         <TextBox Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2" />
         <TextBox Text="{Binding ShortName}" Grid.Row="2" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2"/>
         <TextBox Text="{Binding NameProduct}" Grid.Row="1" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2"/>

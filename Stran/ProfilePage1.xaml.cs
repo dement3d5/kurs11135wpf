@@ -1,10 +1,9 @@
 ﻿using kurs11135.Models;
-using kurs11135.Tools;
+using kurs11135.okna;
+using kurs11135.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,19 +16,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace kurs11135
+namespace kurs11135.Stran
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для ProfilePage1.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ProfilePage1 : Page
     {
-   
-        public MainWindow(User user)
+        
+        public ProfilePage1(User user)
         {
-            InitializeComponent();
-            DataContext = new MainVM(user);
-
+           InitializeComponent();
+            DataContext = new ProfileVM(user);
         }
 
 

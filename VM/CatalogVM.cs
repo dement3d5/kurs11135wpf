@@ -32,12 +32,10 @@ namespace kurs11135.VM
             }
         }
 
-        public Product SelectedItem { get; set; }
+    
         public List<Product> products { get; set; }
         public Product product { get; set; }
-
-
-       
+        public Product SelectedItem { get; set; }
 
         public byte[]? Image { get => image; set { image = value; Signal(); } }
         public string NameProduct { get; set; }
@@ -46,90 +44,48 @@ namespace kurs11135.VM
 
 
 
-        public ICommand MinQuantityCommand { get; set; }
-        public ICommand DecreaseQuantityCommand { get; set; }
-        public ICommand IncreaseQuantityCommand { get; set; }
-        public ICommand MaxQuantityCommand { get; set; }
-
-        private void SetMinQuantity(Product product)
-        {
-            Quantity = 1;
-            Task.Run(async () =>
-            {
-                await che();
-            });
-        }
-        private void DecreaseQuantity(Product product)
-        {
-            if (Quantity > 1)
-            {
-                Quantity--;
-                Task.Run(async () =>
-                {
-                    await che();
-                });
-            }
-            else
-            {
-                MessageBox.Show("Ошибка: Количество не может быть меньше 1");
-                Task.Run(async () =>
-                {
-                    await che();
-                });
-            }
-        }
-        private void IncreaseQuantity(Product product)
-        {
-
-            Quantity++;
-            Task.Run(async () =>
-            {
-                await che();
-            });
-        }
-        private void SetMaxQuantity(Product product)
-        {
-            // Предположим, что у вас есть переменная maxQuantity, содержащая максимальное значение Quantity из базы данных
-            int maxQuantity = 100; // Пример максимального значения из базы данных
-
-            if (Quantity < maxQuantity)
-            {
-                Quantity = maxQuantity;
-                Task.Run(async () =>
-                {
-                    await che();
-                });
-            }
-            else
-            {
-                MessageBox.Show($"Ошибка: На складе имеется максимальное количество товара ({Quantity})");
-                Task.Run(async () =>
-                {
-                    await che();
-                });
-            }
-            Task.Run(async () =>
-            {
-                await che();
-            });
-        }
-
         public CatalogVM()
         {
-            MinQuantityCommand = new RelayCommand<Product>(SetMinQuantity);
-            DecreaseQuantityCommand = new RelayCommand<Product>(DecreaseQuantity);
-            IncreaseQuantityCommand = new RelayCommand<Product>(IncreaseQuantity);
-            MaxQuantityCommand = new RelayCommand<Product>(SetMaxQuantity);
+            Quantity = 0;
+            che();
+       
 
-            Task.Run(async () =>
+        }
+        private ICommand _decreaseQuantityCommand;
+        public ICommand DecreaseQuantityCommand => _decreaseQuantityCommand ??
+            (_decreaseQuantityCommand = new RelayCommand(DecreaseQuantityAction, CanDecreaseQuantity));
+
+        private ICommand _increaseQuantityCommand;
+        public ICommand IncreaseQuantityCommand => _increaseQuantityCommand ??
+            (_increaseQuantityCommand = new RelayCommand(IncreaseQuantityAction, CanIncreaseQuantity));
+        private void DecreaseQuantityAction()
+        {
+            if (Quantity > 0)
             {
-                await che();
-            });
+                Quantity--;
+                // Здесь должна быть логика обновления количества товара в базе данных
+            }
+        }
+        private bool CanDecreaseQuantity() => Quantity > 0;
 
+        private void IncreaseQuantityAction()
+        {
+            if (Quantity < GetMaxQuantity()) // Функция GetMaxQuantity() должна возвращать макс. кол-во товара из БД
+            {
+                Quantity++;
+                // Здесь должна быть логика обновления количества товара в базе данных
+            }
+        }
+        private bool CanIncreaseQuantity() => Quantity < GetMaxQuantity();
 
+        private int GetMaxQuantity()
+        {
+            // Этот метод должен получать максимальное количество товара из БД для SelectedProduct
+            // В этом примере предполагается, что метод Quantity из модели Product возвращает integer.
 
-
-
+            // Здесь временный код, вам нужно реализовать логику получения данных из БД.
+            // Если поле Quantity модели Product - это строка, вам нужно будет её преобразовать в int
+            return SelectedItem != null && int.TryParse(SelectedItem.Quantity, out int maxQuantity) ? maxQuantity : 0;
         }
 
         public async Task che()
@@ -162,13 +118,6 @@ namespace kurs11135.VM
                 Signal();
             }
         }
-
-
-        
-
-
-
-        
 
     }
 

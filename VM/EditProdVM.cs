@@ -133,7 +133,7 @@ namespace kurs11135.VM
                      ShortDescription = ShortName,
                      ImageId = selectedProduct.ImageId
                  }, "put");
-
+                 che();
              });
 
 
