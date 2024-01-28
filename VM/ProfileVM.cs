@@ -15,7 +15,6 @@ namespace kurs11135.VM
         public ProfileVM(User user) 
         {
             User = user;
-
         }
 
 

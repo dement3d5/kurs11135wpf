@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace kurs11135
 {
@@ -13,10 +14,11 @@ namespace kurs11135
     /// </summary>
     public partial class AddOrder : Window
     {
-        public AddOrder()
+        public AddOrder(User currentUser)
         {
             InitializeComponent();
-            DataContext = new AddOrdVM();
+            DataContext = new AddOrdVM(currentUser);
+           
         }
 
 

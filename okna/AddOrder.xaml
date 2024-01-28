@@ -23,14 +23,14 @@
             <RowDefinition Height="57*"/>
             <RowDefinition Height="91*"/>
         </Grid.RowDefinitions>
-
-        <Label Content="Оформление Заказа" HorizontalAlignment="Left" FontFamily="Comic Sans MS" FontSize="24" Width="277"  Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1" Margin="191,0,0,0"/>
+        <TextBlock Text="{Binding CurrentUser.FirstName}" Grid.Column="2" Margin="110,0,0,0" FontFamily="Comic Sans MS" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Width="89"/>
+        <Label Content="Оформление Заказа на имя" HorizontalAlignment="Left" FontFamily="Comic Sans MS" FontSize="24" Width="339"  Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1" Margin="84,0,0,0"/>
         <Label Content="Дата заказа" Margin="0,41,0,0" Grid.RowSpan="2"  />
         <Label Content="Выбор товара" Grid.Row="2" Margin="0,3,0,0" />
         <Label Content="Стоимость" Grid.Row="6" Margin="0,42,0,0" Grid.RowSpan="2" />
         <StackPanel Grid.RowSpan="3" Grid.Row="1" Grid.Column="1" Margin="0,39,0,0">
             <ComboBox ItemsSource="{Binding products}" SelectedItem="{Binding ListProduct }" DisplayMemberPath="ProductName" Width="144" FontSize="16"/>
-            <TextBox Text="{Binding Quantity}" Width="50" />
+            <TextBox  Text="{Binding Quantity}" Width="50" />
             <Button Command="{Binding AddProductToOrderCommand}" Content="Добавить товар" Background="White" />
         </StackPanel>
         <ListBox Grid.Row="3" Grid.Column="1" Grid.RowSpan="4" ItemsSource="{Binding SelectedProducts}" Margin="0,40,0,0">

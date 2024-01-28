@@ -15,26 +15,47 @@
             <RowDefinition/>
 
 
-    </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding orders}" SelectedItem="{Binding SelectedItem}" Grid.Row="1">
-
-            <ListView.View >
+        </Grid.RowDefinitions>
+        <ListView ItemsSource="{Binding orders}" SelectedItem="{Binding SelectedItem}" Grid.Row="1" FontSize="20" FontFamily="Comic Sans MS">
+            <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status.Name}"/>
                     <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding CreateAt}"/>
+                    <GridViewColumn Header="Товар">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ItemsControl ItemsSource="{Binding OrderProducts}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Product.ProductName}" Width="100" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Количество">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ItemsControl ItemsSource="{Binding OrderProducts}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Count}" Width="50" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Стоимость" DisplayMemberBinding="{Binding Cost}"/>
-                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Count}"/>
-                    <GridViewColumn Header="Товар"  DisplayMemberBinding="{Binding Product.ProductName}"/>
-                    <GridViewColumn Header="Покупатель" DisplayMemberBinding="{Binding User.Login}"/>
+                    <GridViewColumn Header="Пользователь" DisplayMemberBinding="{Binding User.FirstName}"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button Command="{Binding AddOrder}" Content="Добавить"/>
-            <Button Command="{Binding DelOrder}" Content="Удалить"/>
-        </StackPanel>
-    
-   
     </Grid>
     
 </Page>

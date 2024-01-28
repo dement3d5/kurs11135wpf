@@ -14,7 +14,7 @@
             <RowDefinition/>
 
         </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding products}" SelectedItem="{Binding SelectedItem}" Grid.Row="1"> 
+        <ListView ItemsSource="{Binding products}" SelectedItem="{Binding SelectedItem}" Grid.Row="1" FontFamily="Comic Sans MS" FontSize="20"> 
             <ListView.View>
                 <GridView>
                    <GridViewColumn Header="Изображение" >

@@ -57,7 +57,7 @@ namespace kurs11135.Tools
             });
             Order = new CommandVM(() =>
                 {
-                    CurrentPage = new Order1();
+                    CurrentPage = new Order1(User);
 
                 });
 
@@ -73,7 +73,7 @@ namespace kurs11135.Tools
 
             OrdersPage1 = new CommandVM(()  =>
             {
-                CurrentPage = new OrdersPage();
+                CurrentPage = new OrdersPage(User);
 
             });
             ProfilePage1 = new CommandVM(() =>

@@ -32,6 +32,18 @@ namespace kurs11135.VM
             }
         }
 
+        private User currentUser;
+        public User CurrentUser
+        {
+            get => currentUser;
+            set
+            {
+                currentUser = value;
+                Signal(nameof(CurrentUser));
+            }
+        }
+
+
         public List<Order> orders { get; set; }
         private Order listOrder;
         public Order ListOrder
@@ -117,13 +129,12 @@ namespace kurs11135.VM
         }
 
 
-   
+        public User User { get; private set; }
 
-        public AddOrdVM()
+        public AddOrdVM(User currentUser)
         {
 
-
-
+            CurrentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
 
             AddProductToOrderCommand = new CommandVM(() =>
             {
@@ -137,11 +148,16 @@ namespace kurs11135.VM
                 if (SelectedProducts != null && SelectedProducts.Any())
                 {
                     CalculateSellPrice();
+
+
                     var json = await Api.Post("Orders", new Order
                     {
                         CreateAt = CreateAt,
                         Cost = CostOrder,
-                        OrderProducts = SelectedProducts.ToList()
+                        OrderProducts = SelectedProducts.ToList(),
+                        StatusId = 1,
+                        UserId = CurrentUser.Id
+
                     }, "SaveOrder");
                     var result = Api.Deserialize<Order>(json);
              
@@ -186,7 +202,7 @@ namespace kurs11135.VM
         });
             AddOrder = new CommandVM(() =>
             {
-                new AddOrder().Show();
+                new AddOrder(currentUser).Show();
                 Task.Run(async () =>
                 {
                     await che();

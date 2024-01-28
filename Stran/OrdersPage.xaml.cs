@@ -1,4 +1,5 @@
-﻿using kurs11135.Tools;
+﻿using kurs11135.Models;
+using kurs11135.Tools;
 using kurs11135.VM;
 using System;
 using System.Collections.Generic;
@@ -22,10 +23,10 @@ namespace kurs11135.Stran
     /// </summary>
     public partial class OrdersPage : Page
     {
-        public OrdersPage()
+        public OrdersPage(User currentUser)
         {
             InitializeComponent();
-            DataContext = new AddOrdVM();
+            DataContext = new AddOrdVM(currentUser);
         }
 
 

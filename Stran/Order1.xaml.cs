@@ -1,4 +1,5 @@
-﻿using kurs11135.VM;
+﻿using kurs11135.Models;
+using kurs11135.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,10 @@ namespace kurs11135
     /// </summary>
     public partial class Order1 : Page
     {
-        public Order1()
+        public Order1(User currentUser)
         {
             InitializeComponent();
-            DataContext = new AddOrdVM();
+            DataContext = new AddOrdVM(currentUser);
 
 
         }
