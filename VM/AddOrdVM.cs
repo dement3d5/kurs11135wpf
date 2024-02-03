@@ -251,6 +251,12 @@ namespace kurs11135.VM
             var result3 = Api.Deserialize<List<User>>(json3);
             users = result3;
             Signal(nameof(users));
+
+            //var ordersJson = await Api.Post("Orders", new { UserId = CurrentUser.Id }, "getByUserId");
+            //orders = Api.Deserialize<List<Order>>(ordersJson);
+            //Signal(nameof(orders));
+
+
         }
         //как блять комитнуть
 

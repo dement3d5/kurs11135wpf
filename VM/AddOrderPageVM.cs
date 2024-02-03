@@ -1,13 +1,16 @@
 ﻿using kurs11135.Models;
-using kurs11135.okna;
 using kurs11135.Tools;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
 using System.Windows;
+using kurs11135.okna;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.Reflection.Metadata;
 
 namespace kurs11135.VM
 {
@@ -28,6 +31,18 @@ namespace kurs11135.VM
                 Signal();
             }
         }
+
+        private User currentUser;
+        public User CurrentUser
+        {
+            get => currentUser;
+            set
+            {
+                currentUser = value;
+                Signal(nameof(CurrentUser));
+            }
+        }
+
 
         public List<Order> orders { get; set; }
         private Order listOrder;
@@ -114,9 +129,13 @@ namespace kurs11135.VM
         }
 
 
+        public User User { get; private set; }
 
-        public AddOrderPageVM(User user)
+        public AddOrderPageVM(User currentUser)
         {
+
+            CurrentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
+
             AddProductToOrderCommand = new CommandVM(() =>
             {
                 OnAddProductToOrder(ListProduct, Quantity);
@@ -133,12 +152,11 @@ namespace kurs11135.VM
 
                     var json = await Api.Post("Orders", new Order
                     {
-
                         CreateAt = CreateAt,
                         Cost = CostOrder,
                         OrderProducts = SelectedProducts.ToList(),
                         StatusId = 1,
-                        //UserId =
+                        UserId = CurrentUser.Id
 
                     }, "SaveOrder");
                     var result = Api.Deserialize<Order>(json);
@@ -182,14 +200,14 @@ namespace kurs11135.VM
             {
                 await che();
             });
-            //AddOrder = new CommandVM(() =>
-            //{
-            //    new AddOrder().Show();
-            //    Task.Run(async () =>
-            //    {
-            //        await che();
-            //    });
-            //});
+            AddOrder = new CommandVM(() =>
+            {
+                new AddOrder(currentUser).Show();
+                Task.Run(async () =>
+                {
+                    await che();
+                });
+            });
             DelOrder = new CommandVM(async () =>
             {
                 var json1 = await Api.Post("Orders", SelectedItem.Id, "delete");
@@ -219,22 +237,26 @@ namespace kurs11135.VM
             orderStatuses = result;
             Signal(nameof(orderStatuses));
 
-            var json4 = await Api.Post("Orders", null, "get");
-            var result4 = Api.Deserialize<List<Order>>(json4);
-            orders = result4;
-            Signal(nameof(orders));
+            //var json4 = await Api.Post("Orders", null, "get");
+            //var result4 = Api.Deserialize<List<Order>>(json4);
+            //orders = result4;
+            //Signal(nameof(orders));
 
             string json1 = await Api.Post("Products", null, "get");
             var result2 = Api.Deserialize<List<Product>>(json1);
             products = result2;
             Signal(nameof(products));
 
-
-
             string json3 = await Api.Post("Users", null, "get");
             var result3 = Api.Deserialize<List<User>>(json3);
             users = result3;
             Signal(nameof(users));
+
+            var ordersJson = await Api.Post("Orders", new { UserId = CurrentUser.Id }, "getByUserId");
+            orders = Api.Deserialize<List<Order>>(ordersJson);
+            Signal(nameof(orders));
+
+
         }
         //как блять комитнуть
 
@@ -251,8 +273,4 @@ namespace kurs11135.VM
         //    Signal(nameof(products));
         //}
     }
-
-
 }
-    
-

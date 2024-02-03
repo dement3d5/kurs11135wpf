@@ -26,7 +26,7 @@ namespace kurs11135.Stran
         public OrdersPage(User currentUser)
         {
             InitializeComponent();
-            DataContext = new AddOrdVM(currentUser);
+            DataContext = new AddOrderPageVM(currentUser);
         }
 
 
