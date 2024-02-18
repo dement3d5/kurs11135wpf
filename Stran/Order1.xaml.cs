@@ -27,7 +27,7 @@ namespace kurs11135
         public Order1(User currentUser)
         {
             InitializeComponent();
-            DataContext = new AddOrdVM(currentUser);
+            DataContext = new AdminOrdersVM(currentUser);
 
         }
 

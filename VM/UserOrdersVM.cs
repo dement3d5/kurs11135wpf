@@ -1,20 +1,18 @@
 ﻿using kurs11135.Models;
+using kurs11135.okna;
 using kurs11135.Tools;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net;
 using System.Windows;
-using kurs11135.okna;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using System.Reflection.Metadata;
 
 namespace kurs11135.VM
 {
-    public class AddOrderPageVM : BaseVM
+    public class UserOrdersVM : BaseVM
     {
 
         private DateTime createAt = DateTime.Now;
@@ -131,8 +129,15 @@ namespace kurs11135.VM
 
         public User User { get; private set; }
 
-        public AddOrderPageVM(User currentUser)
+
+
+
+
+        public UserOrdersVM(User currentUser)
         {
+
+            Task.Run(async () => { await LoadOrders(); });
+
 
             CurrentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
 
@@ -142,70 +147,16 @@ namespace kurs11135.VM
             });
 
 
-
-            SaveButton = new CommandVM(async () =>
-            {
-                if (SelectedProducts != null && SelectedProducts.Any())
-                {
-                    CalculateSellPrice();
-
-
-                    var json = await Api.Post("Orders", new Order
-                    {
-                        CreateAt = CreateAt,
-                        Cost = CostOrder,
-                        OrderProducts = SelectedProducts.ToList(),
-                        StatusId = 1,
-                        UserId = CurrentUser.Id
-
-                    }, "SaveOrder");
-                    var result = Api.Deserialize<Order>(json);
-
-                    if (result != null)
-                    {
-                        MessageBox.Show("Заказ успешно оформлен.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ошибка при сохранении заказа.");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Не выбраны товары для заказа.");
-                }
-            });
-
-
-
-            //SaveButton = new CommandVM(async () =>
-            //{
-
-            //    if (SelectedProducts != null && SelectedProducts.Count > 0)
-            //    {
-            //        var json = await Api.Post("Orders", new Order
-            //        {
-            //            CreateAt = CreateAt,
-            //            Cost = CostOrder,
-            //            ProductId = ListProduct.Id,
-            //            Count = CountOrder,
-            //            OrderProducts = new List<OrderProduct>(SelectedProducts)
-            //        }, "SaveOrder");
-            //        Order result = Api.Deserialize<Order>(json);
-            //    }
-
-            //});
-
             Task.Run(async () =>
             {
-                await che();
+                await LoadOrders();
             });
             AddOrder = new CommandVM(() =>
             {
                 new AddOrder(currentUser).Show();
                 Task.Run(async () =>
                 {
-                    await che();
+                    await LoadOrders();
                 });
             });
             DelOrder = new CommandVM(async () =>
@@ -219,24 +170,25 @@ namespace kurs11135.VM
             });
         }
 
-        //как блять комитнуть
+
         private void CalculateSellPrice()
         {
-
             CostOrder = SelectedProducts.Sum(op => op.Product.SellPrice * int.Parse(op.Count));
             Signal(nameof(CostOrder));
         }
 
-
-
-
-        public async Task che()
+        public async Task LoadOrders()
         {
+
             var json = await Api.Post("OrderStatus", null, "get");
             var result = Api.Deserialize<List<OrderStatus>>(json);
             orderStatuses = result;
             Signal(nameof(orderStatuses));
 
+            var ordersJson = await Api.Post("Orders", null , "get");
+            var allOrders = Api.Deserialize<List<Order>>(ordersJson);
+            orders = allOrders.Where(o => o.UserId == CurrentUser.Id).ToList();
+            Signal(nameof(orders));
 
             string json1 = await Api.Post("Products", null, "get");
             var result2 = Api.Deserialize<List<Product>>(json1);
@@ -247,24 +199,6 @@ namespace kurs11135.VM
             var result3 = Api.Deserialize<List<User>>(json3);
             users = result3;
             Signal(nameof(users));
-
-         
-
-
         }
-        //как блять комитнуть
-
-        //public void UpdateList()
-        //{
-        //    var json = await Api.Post("OrderStatus", null, "get");
-        //    var result = Api.Deserialize<List<OrderStatus>>(json);
-        //    orderStatuses = result;
-        //    Signal(nameof(orderStatuses));
-
-        //    string json1 = await Api.Post("Products", null, "get");
-        //    var result2 = Api.Deserialize<List<Product>>(json1);
-        //    products = result2;
-        //    Signal(nameof(products));
-        //}
     }
 }

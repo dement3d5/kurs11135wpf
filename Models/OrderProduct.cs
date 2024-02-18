@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace kurs11135.Models
 {
@@ -11,7 +12,9 @@ namespace kurs11135.Models
         public string? Count { get; set; }
         public int? CategoryId { get; set; }
 
+
         public virtual Order? Order { get; set; }
-        public virtual Product? Product { get; set; }
+
+        public virtual Product? Product { get; set;}
     }
 }

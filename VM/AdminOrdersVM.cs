@@ -1,21 +1,20 @@
 ﻿using kurs11135.Models;
+using kurs11135.okna;
 using kurs11135.Tools;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net;
 using System.Windows;
-using kurs11135.okna;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using System.Reflection.Metadata;
 
 namespace kurs11135.VM
 {
-    public class AddOrderPageVM : BaseVM
+    public class AdminOrdersVM : BaseVM
     {
+
+
 
         private DateTime createAt = DateTime.Now;
 
@@ -131,8 +130,9 @@ namespace kurs11135.VM
 
         public User User { get; private set; }
 
-        public AddOrderPageVM(User currentUser)
+        public AdminOrdersVM(User currentUser)
         {
+            Task.Run(async () => { await LoadAllOrders(); });
 
             CurrentUser = currentUser ?? throw new ArgumentNullException(nameof(currentUser));
 
@@ -198,14 +198,14 @@ namespace kurs11135.VM
 
             Task.Run(async () =>
             {
-                await che();
+                await LoadAllOrders();
             });
             AddOrder = new CommandVM(() =>
             {
                 new AddOrder(currentUser).Show();
                 Task.Run(async () =>
                 {
-                    await che();
+                    await LoadAllOrders();
                 });
             });
             DelOrder = new CommandVM(async () =>
@@ -228,15 +228,17 @@ namespace kurs11135.VM
         }
 
 
-
-
-        public async Task che()
+        public async Task LoadAllOrders()
         {
             var json = await Api.Post("OrderStatus", null, "get");
             var result = Api.Deserialize<List<OrderStatus>>(json);
             orderStatuses = result;
             Signal(nameof(orderStatuses));
 
+            var json4 = await Api.Post("Orders", null, "get");
+            var result4 = Api.Deserialize<List<Order>>(json4);
+            orders = result4;
+            Signal(nameof(orders));
 
             string json1 = await Api.Post("Products", null, "get");
             var result2 = Api.Deserialize<List<Product>>(json1);
@@ -248,23 +250,16 @@ namespace kurs11135.VM
             users = result3;
             Signal(nameof(users));
 
-         
-
-
         }
-        //как блять комитнуть
 
-        //public void UpdateList()
-        //{
-        //    var json = await Api.Post("OrderStatus", null, "get");
-        //    var result = Api.Deserialize<List<OrderStatus>>(json);
-        //    orderStatuses = result;
-        //    Signal(nameof(orderStatuses));
 
-        //    string json1 = await Api.Post("Products", null, "get");
-        //    var result2 = Api.Deserialize<List<Product>>(json1);
-        //    products = result2;
-        //    Signal(nameof(products));
-        //}
+
+
     }
+
+
+       
+
+       
+    
 }

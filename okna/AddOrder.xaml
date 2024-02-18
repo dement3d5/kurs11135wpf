@@ -37,10 +37,8 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <!-- Визуализация выбранного товара и количества -->
                         <TextBlock Text="{Binding Product.ProductName}" Width="100" />
                         <TextBlock Text="{Binding Count}" Width="50" />
-                        <!-- Можете добавить кнопку для удаления товара из списка, если требуется -->
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

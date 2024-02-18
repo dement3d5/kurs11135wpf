@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static kurs11135.VM.AddOrdVM;
 
 namespace kurs11135.VM
 {
@@ -32,7 +33,8 @@ namespace kurs11135.VM
             }
         }
 
-    
+      
+
         public List<Product> products { get; set; }
         public Product product { get; set; }
         public Product SelectedItem { get; set; }
@@ -42,15 +44,30 @@ namespace kurs11135.VM
         public string ShortName { get; set; }
 
 
-
+        //public void Cleanup()
+        //{
+        //    Mediator.OnProductQuantityChanged -= UpdateProductQuantity;
+        //}
 
         public CatalogVM()
         {
-            Quantity = 0;
+          
             che();
-       
 
         }
+
+        private void UpdateProductQuantity(Product updatedProduct)
+        {
+            var productToUpdate = products.FirstOrDefault(p => p.Id == updatedProduct.Id);
+            if (productToUpdate != null)
+            {
+                productToUpdate.Quantity = updatedProduct.Quantity;
+                Signal(nameof(products));
+            }
+
+            che(); 
+        }
+
         private ICommand _decreaseQuantityCommand;
         public ICommand DecreaseQuantityCommand => _decreaseQuantityCommand ??
             (_decreaseQuantityCommand = new RelayCommand(DecreaseQuantityAction, CanDecreaseQuantity));

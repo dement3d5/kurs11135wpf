@@ -19,22 +19,5 @@ namespace kurs11135
             InitializeComponent();
             DataContext = new AddOrdVM(currentUser);
         }
-
-
-
-
-
-
-
-        //private async void Button_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //    string json = await Api.Post("OrderStatus", new OrderStatus { Name = "Новый статус" });
-        //    if (!string.IsNullOrEmpty(json))
-        //    {
-        //        OrderStatus answer = Api.Deserialize<OrderStatus>(json);
-        //    }
-        //}
-
     }
 }

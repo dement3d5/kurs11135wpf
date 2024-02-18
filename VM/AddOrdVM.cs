@@ -11,6 +11,7 @@ using kurs11135.okna;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Reflection.Metadata;
+using System.Text.Json;
 
 namespace kurs11135.VM
 {
@@ -97,7 +98,7 @@ namespace kurs11135.VM
         public decimal CostOrder { get; set; }
         public string Count { get; set; }
 
-        public CommandVM AddProductToOrderCommand { get;}
+        public CommandVM AddProductToOrderCommand { get; }
         public ObservableCollection<OrderProduct> SelectedProducts { get; set; } = new ObservableCollection<OrderProduct>();
 
 
@@ -118,6 +119,7 @@ namespace kurs11135.VM
 
         private string quantity;
 
+
         public string Quantity
         {
             get => quantity;
@@ -127,6 +129,15 @@ namespace kurs11135.VM
                 Signal();
             }
         }
+
+       
+
+
+
+
+
+
+        private int inputQuantity;
 
 
         public User User { get; private set; }
@@ -138,9 +149,22 @@ namespace kurs11135.VM
 
             AddProductToOrderCommand = new CommandVM(() =>
             {
-                OnAddProductToOrder(ListProduct, Quantity);
+                if (int.TryParse(Quantity, out inputQuantity))
+                {
+                    if (ListProduct != null && inputQuantity <= int.Parse(ListProduct.Quantity))
+                    {
+                        OnAddProductToOrder(ListProduct, Quantity);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Невозможно добавить {inputQuantity} единиц товара {ListProduct?.ProductName}, так как на складе осталось только {ListProduct?.Quantity} единиц.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Некорректное количество для добавления в заказ.");
+                }
             });
-
 
 
             SaveButton = new CommandVM(async () =>
@@ -150,19 +174,40 @@ namespace kurs11135.VM
                     CalculateSellPrice();
 
 
-                    var json = await Api.Post("Orders", new Order
+                    var order = new Order
                     {
                         CreateAt = CreateAt,
                         Cost = CostOrder,
                         OrderProducts = SelectedProducts.ToList(),
                         StatusId = 1,
                         UserId = CurrentUser.Id
-
-                    }, "SaveOrder");
+                    };
+                    var json = await Api.Post("Orders", order, "SaveOrder");
                     var result = Api.Deserialize<Order>(json);
-             
+
                     if (result != null)
                     {
+
+                        foreach (var orderProduct in SelectedProducts)
+                        {
+                            Product product = products.FirstOrDefault(p => p.Id == orderProduct.ProductId);
+                            if (product != null)
+                            {
+                                int newQuantity = Convert.ToInt32(product.Quantity) - Convert.ToInt32(orderProduct.Count);
+
+                                if (newQuantity >= 0)
+                                {
+                                    product.Quantity = newQuantity.ToString();
+
+                                    json = await Api.Post("Products", product, "put");
+                        
+                                }
+                            }
+                        }
+
+                     
+                        await che();
+
                         MessageBox.Show("Заказ успешно оформлен.");
                     }
                     else
@@ -177,6 +222,24 @@ namespace kurs11135.VM
             });
 
 
+
+
+            //foreach (var orderProduct in SelectedProducts)
+            //{
+            //    Product product = products.FirstOrDefault(p => p.Id == orderProduct.ProductId);
+            //    if (product != null)
+            //    {
+            //        int currentQuantity = Convert.ToInt32(product.Quantity);
+            //        int orderQuantity = Convert.ToInt32(orderProduct.Count);
+
+            //        if (currentQuantity >= orderQuantity)
+            //        {
+            //            Signal(nameof(ListProduct));
+
+            //        }
+            //    }
+            //}
+            //che();
 
             //SaveButton = new CommandVM(async () =>
             //{
@@ -197,9 +260,9 @@ namespace kurs11135.VM
             //});
 
             Task.Run(async () =>
-        {
-            await che();
-        });
+            {
+                await che();
+            });
             AddOrder = new CommandVM(() =>
             {
                 new AddOrder(currentUser).Show();
@@ -251,12 +314,6 @@ namespace kurs11135.VM
             var result3 = Api.Deserialize<List<User>>(json3);
             users = result3;
             Signal(nameof(users));
-
-            //var ordersJson = await Api.Post("Orders", new { UserId = CurrentUser.Id }, "getByUserId");
-            //orders = Api.Deserialize<List<Order>>(ordersJson);
-            //Signal(nameof(orders));
-
-
         }
         //как блять комитнуть
 
@@ -272,5 +329,5 @@ namespace kurs11135.VM
         //    products = result2;
         //    Signal(nameof(products));
         //}
-    } 
+    }
 }
