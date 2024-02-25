@@ -143,59 +143,6 @@ namespace kurs11135.VM
 
 
 
-            SaveButton = new CommandVM(async () =>
-            {
-                if (SelectedProducts != null && SelectedProducts.Any())
-                {
-                    CalculateSellPrice();
-
-
-                    var json = await Api.Post("Orders", new Order
-                    {
-                        CreateAt = CreateAt,
-                        Cost = CostOrder,
-                        OrderProducts = SelectedProducts.ToList(),
-                        StatusId = 1,
-                        UserId = CurrentUser.Id
-
-                    }, "SaveOrder");
-                    var result = Api.Deserialize<Order>(json);
-
-                    if (result != null)
-                    {
-                        MessageBox.Show("Заказ успешно оформлен.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ошибка при сохранении заказа.");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Не выбраны товары для заказа.");
-                }
-            });
-
-
-
-            //SaveButton = new CommandVM(async () =>
-            //{
-
-            //    if (SelectedProducts != null && SelectedProducts.Count > 0)
-            //    {
-            //        var json = await Api.Post("Orders", new Order
-            //        {
-            //            CreateAt = CreateAt,
-            //            Cost = CostOrder,
-            //            ProductId = ListProduct.Id,
-            //            Count = CountOrder,
-            //            OrderProducts = new List<OrderProduct>(SelectedProducts)
-            //        }, "SaveOrder");
-            //        Order result = Api.Deserialize<Order>(json);
-            //    }
-
-            //});
-
             Task.Run(async () =>
             {
                 await LoadAllOrders();

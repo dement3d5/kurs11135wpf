@@ -17,7 +17,6 @@ namespace kurs11135.VM
 
         private DateTime createAt = DateTime.Now;
 
-
         public List<User> users { get; set; }
         private User listUser;
         public User ListUser
