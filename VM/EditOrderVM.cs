@@ -1,4 +1,4 @@
-﻿using kurs11135.Models;
+﻿using kurs11135;
 using kurs11135.Tools;
 using System;
 using System.Collections.Generic;
@@ -85,11 +85,11 @@ namespace kurs11135.VM
                 {
                     Id = order.Id,
                     CreateAt = CreateAt,
-                    Count = CountOrder,
+                    //Count = CountOrder,
                     Cost = CostOrder,
                     StatusId = ListOrderStatus.Id,
                     Status = ListOrderStatus,
-                    ProductId = ListProduct.Id,
+                    //ProductId = ListProduct.Id,
                     UserId = ListUser.Id,
                     User = ListUser
                 }, "put");

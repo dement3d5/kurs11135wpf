@@ -1,4 +1,4 @@
-﻿using kurs11135.Models;
+﻿using kurs11135;
 using kurs11135.okna;
 using kurs11135.Tools;
 using System;
@@ -93,7 +93,7 @@ namespace kurs11135.VM
         public CommandVM AddOrder { get; set; }
         public CommandVM DelOrder { get; set; }
         public CommandVM EditOrder { get; }
-        public decimal CostOrder { get; set; }
+        public decimal? CostOrder { get; set; }
         public string Count { get; set; }
 
         public CommandVM AddProductToOrderCommand { get; }

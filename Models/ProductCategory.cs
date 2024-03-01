@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace kurs11135.Models
+namespace kurs11135
 {
     public partial class ProductCategory
     {

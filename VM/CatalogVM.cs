@@ -1,6 +1,6 @@
 ﻿
 using GalaSoft.MvvmLight.CommandWpf;
-using kurs11135.Models;
+using kurs11135;
 using kurs11135.Tools;
 using System;
 using System.Collections.Generic;
