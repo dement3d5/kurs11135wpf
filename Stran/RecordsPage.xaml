@@ -4,31 +4,23 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:kurs11135.Stran"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="RecordsPage">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="421*"/>
         </Grid.RowDefinitions>
-
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
-            <TextBlock Text="Дата:" VerticalAlignment="Center"/>
-            <DatePicker Name="datePicker" Margin="5"/>
-          
-        </StackPanel>
-
-        <ListView Grid.Row="1" Name="salesListView" Margin="10">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Date}" Width="150"/>
-                    <GridViewColumn Header="Продукт" DisplayMemberBinding="{Binding Product}" Width="200"/>
-                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Quantity}" Width="100"/>
-                    <GridViewColumn Header="Сумма" DisplayMemberBinding="{Binding Amount}" Width="100"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="38,23,40,10">
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Дата" />
+            </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Сумма" LabelFormatter="{Binding Formatter}" />
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
     </Grid>
 </Page>
