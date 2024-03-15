@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kurs11135.okna;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,12 @@ namespace kurs11135
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            AuthLog authLogWindow = new AuthLog();
+            authLogWindow.Show();
+        }
+
     }
 }

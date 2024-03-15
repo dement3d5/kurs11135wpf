@@ -27,9 +27,18 @@
         </Grid>
 
         <StackPanel Grid.Column="0" Background="LightGray" Grid.RowSpan="2">
-            <Button Command="{Binding CatalogPage1}"  Content="Каталог" Margin="10" />
-            <Button Command="{Binding OrdersPage1}" Content="Заказы" Margin="10"/>
-            <Button Command="{Binding ProfilePage1}" Content="Профиль" Margin="10"/>
+            <Button Content="Каталог" Command="{Binding CatalogPage1}" Margin="10" Width="Auto" Height="Auto"
+        Background="#FF3498DB" Foreground="White" BorderBrush="#FF3498DB"/>
+
+            <Button Content="Заказы" Command="{Binding OrdersPage1}" Margin="10" Width="Auto" Height="Auto"
+        Background="#FF3498DB" Foreground="White" BorderBrush="#FF3498DB"/>
+
+            <Button Content="Профиль" Command="{Binding ProfilePage1}" Margin="10" Width="Auto" Height="Auto"
+        Background="#FF3498DB" Foreground="White" BorderBrush="#FF3498DB"/>
+
+            <Button Content="Выход" Click="Button_Click" Margin="10" Width="Auto" Height="Auto"
+        Background="#FF3498DB" Foreground="White" BorderBrush="#FF3498DB"/>
+
         </StackPanel>
         <Label VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Center" Content="Mагазин бытовой химии" Height="31" Width="196" Grid.Column="2"  />
 

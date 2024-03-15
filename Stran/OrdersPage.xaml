@@ -11,10 +11,14 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-
-
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center">
+            <TextBlock Text="Заказы" FontSize="24" FontWeight="Bold" Margin="0,10"/>
+        </StackPanel>
+
         <ListView ItemsSource="{Binding orders}" SelectedItem="{Binding SelectedItem}" Grid.Row="1">
             <ListView.View>
                 <GridView>
@@ -27,8 +31,8 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding Product.ProductName}" Width="100" />
-                                                <TextBlock Text="{Binding Count}" Width="50" />
+                                                <TextBlock Text="{Binding Product.ProductName}" Width="150" Margin="0,0,10,0"/>
+                                                <TextBlock Text="{Binding Count}" Width="50"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
@@ -36,15 +40,14 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    
+
                     <GridViewColumn Header="Стоимость" DisplayMemberBinding="{Binding Cost}"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button Command="{Binding AddOrder}" Content="Оформить заказ"/>
+
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" Margin="0,10">
+            <Button Command="{Binding AddOrder}" Content="Оформить заказ" Width="150" Margin="5"/>
         </StackPanel>
-
-
     </Grid>
 </Page>

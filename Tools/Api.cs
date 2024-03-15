@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -14,7 +11,8 @@ namespace kurs11135.Tools
     {
         static HttpClient client = new HttpClient();
         static string host = "https://localhost:7199/api/";
-        static JsonSerializerOptions options = new JsonSerializerOptions { 
+        static JsonSerializerOptions options = new JsonSerializerOptions
+        {
             ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve,
             PropertyNameCaseInsensitive = true
         };
@@ -27,10 +25,17 @@ namespace kurs11135.Tools
                 string url = host + controller;
                 if (!string.IsNullOrEmpty(method))
                     url += $"/{method}";
-                //url += $"/{id}"; для get/delete/put
+
                 string json = "";
                 if (body != null)
+                {
                     json = JsonSerializer.Serialize(body, body.GetType(), options);
+                    if (HasUnsafeCommands(json))
+                    {
+                        MessageBox.Show("Введены недопустимые команды");
+                        return "";
+                    }
+                }
                 var response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
                 if (response.IsSuccessStatusCode)
                     return await response.Content.ReadAsStringAsync();
@@ -47,10 +52,14 @@ namespace kurs11135.Tools
             }
         }
 
-
         public static T Deserialize<T>(string json)
         {
             return JsonSerializer.Deserialize<T>(json, options);
+        }
+
+        private static bool HasUnsafeCommands(string input)
+        {
+            return false;
         }
     }
 }

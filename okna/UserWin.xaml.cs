@@ -25,10 +25,14 @@ namespace kurs11135.okna
         public UserWin(User user)
         {
             InitializeComponent();
-           
             DataContext = new MainVM(user);
         }
 
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            AuthLog al = new AuthLog();
+            al.Show();
+            this.Close();
+        }
     }
 }

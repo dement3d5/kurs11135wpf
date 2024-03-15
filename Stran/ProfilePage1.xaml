@@ -7,39 +7,63 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProfilePage1">
-    <Grid>
+    <Grid Background="#F0F0F0">
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="39*"/>
-            <ColumnDefinition Width="41*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" MinHeight="28"/>
-            <RowDefinition/>
-
+            <RowDefinition Height="Auto" MinHeight="50"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" HorizontalAlignment="Center"  Orientation="Horizontal" Grid.ColumnSpan="2">
-            <Button Command="{Binding EditProfile}" Content="Редактировать"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Width="169" HorizontalAlignment="Right" >
 
-            <Label Content="Логин " Grid.Row="1" FontSize="24" Width="78" />
-            <Label Content="Имя " Grid.Row="1" FontSize="24" Width="78"  />
+            <Button Command="{Binding EditProfile}" Content="Редактировать" Background="#007ACC" Foreground="White" Padding="10,5" Margin="10,5,17,5"/>
+   
 
-            <Label Content="Фамилия" Grid.Row="1" FontSize="24" Width="113" />
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <Border BorderBrush="#007ACC" BorderThickness="0,0,0,2" Margin="20,10,20,0">
+                <StackPanel Margin="10">
+                    <TextBlock Text="{Binding User.FullName}" FontSize="30" FontWeight="Bold" Foreground="#007ACC"/>
+                </StackPanel>
+            </Border>
 
-            <Label Content="Организация" Grid.Row="1" FontSize="24" Width="164" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  />
-
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="358">
-            <TextBlock Text="{Binding User.Login}" FontSize="24" Width="358"  Grid.Row="1" HorizontalAlignment="Left" Height="38" />
-            <TextBlock Text="{Binding User.FirstName}" FontSize="24" Width="358"  Grid.Row="1" HorizontalAlignment="Left" Height="50" />
-            <TextBlock Text="{Binding User.LastName}" FontSize="24" Width="358"  Grid.Row="1" HorizontalAlignment="Left" Height="46" />
-            <TextBlock Text="{Binding User.Organization}" FontSize="24" Width="358"  Grid.Row="1" HorizontalAlignment="Left" Height="46" />
-        </StackPanel>
-
-
-
-
+            <StackPanel Margin="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Логин: " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding User.Login}" FontSize="20" Grid.Column="1" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Margin="0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Имя: " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding User.FirstName}" FontSize="20" Grid.Column="1" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Margin="0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Фамилия: " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding User.LastName}" FontSize="20" Grid.Column="1" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Margin="0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Номер телефона: " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding User.Organization}" FontSize="20" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="10,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" Height="30" FontSize="24" FontWeight="Bold"><Run Language="ru-ru" Text="Профиль"/></TextBlock>
     </Grid>
 </Page>

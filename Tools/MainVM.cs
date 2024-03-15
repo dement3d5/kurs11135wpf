@@ -3,6 +3,7 @@ using kurs11135.okna;
 using kurs11135.Stran;
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -42,7 +43,6 @@ namespace kurs11135.Tools
             }
         }
 
-
         public string UserName
         {
             get => $"{User.FirstName} {User.LastName}";
@@ -50,6 +50,7 @@ namespace kurs11135.Tools
 
         public MainVM(User user)
         {
+
             User = user;
             CurrentPage = new hiPage(this);
             Invoice = new CommandVM(() =>

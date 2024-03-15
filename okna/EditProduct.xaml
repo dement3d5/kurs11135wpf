@@ -8,46 +8,43 @@
         Title="EditProduct" MaxHeight="450" MaxWidth="800" MinHeight="450" MinWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="140*"/>
-        <ColumnDefinition Width="277*"/>
-        <ColumnDefinition Width="383*"/>
-    </Grid.ColumnDefinitions>
-    <Grid.RowDefinitions>
-        <RowDefinition Height="41*"/>
-        <RowDefinition Height="39*"/>
-        <RowDefinition Height="42*"/>
-        <RowDefinition Height="40*"/>
-        <RowDefinition Height="42*"/>
-        <RowDefinition Height="39*"/>
-        <RowDefinition Height="42*"/>
-        <RowDefinition Height="44*"/>
-        <RowDefinition Height="44*"/>
-        <RowDefinition Height="61*"/>
-    </Grid.RowDefinitions>
 
-    <Label Content="Изменить Товар" HorizontalAlignment="Left" FontFamily="Comic Sans MS" FontSize="24" Width="200"  Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1" Margin="183,0,0,0"/>
-    <Label Content="Категория" Margin="0,41,0,0" Grid.RowSpan="2"  />
-    <Label Content="Название товара" Grid.Row="1" Margin="0,39,0,0" Grid.RowSpan="2" />
-    <Label Content="Краткое опиcание" Grid.Row="2" Margin="0,42,0,0" Grid.RowSpan="2" />
-    <Label Content="Добавить изображение" Grid.Row="3" Margin="0,40,0,0" Grid.RowSpan="2"/>
-    <Label Content="Количество" Grid.Row="4" Margin="0,42,0,0" Grid.RowSpan="2" />
-        <ComboBox ItemsSource="{Binding ProductCategory }" SelectedItem="{Binding ListProductCategory}" DisplayMemberPath="Name" Grid.Column="1" FontSize="20" Margin="0,41,0,0" Grid.RowSpan="2"/>
-    <TextBox Text="{Binding PostavPriсе, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2" />
-    <TextBox Text="{Binding Markup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2"/>
-    <TextBox Text="{Binding SellPrice, Mode=OneWay}" Grid.Row="7" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2" />
-    <TextBox Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2" />
-    <TextBox Text="{Binding ShortName}" Grid.Row="2" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2"/>
-    <TextBox Text="{Binding NameProduct}" Grid.Row="1" Grid.Column="1" FontSize="20" Margin="0,42,0,0" Grid.RowSpan="2"/>
-        <Button  Grid.Row="3" Command="{Binding EditImage}" Content="..."  FontSize="20" Grid.Column="1" Margin="0,40,0,0" Grid.RowSpan="2" />
-    <Button Command="{Binding SaveButton}" Content="Сохранить" Grid.Column="0" Grid.Row="8"  Grid.ColumnSpan="3" Margin="0,44,0,0" Grid.RowSpan="2" />
-    <Image Grid.Column="2" HorizontalAlignment="Left" Height="207" Margin="67,15,0,0" Source="{Binding Image}" VerticalAlignment="Top" Width="246" Grid.Row="2" Grid.RowSpan="6"/>
-    <Label Content="Цена поставщика" Grid.Row="6" Margin="0,3,0,0"  />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
 
-    <Label Content="% наценки" Grid.Row="7" Margin="0,3,0,0"  />
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="42*"/>
+            <RowDefinition Height="39*"/>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="71*"/>
+            <RowDefinition Height="51*"/>
+            <RowDefinition Height="35*"/>
 
-    <Label Content="Цена продажи" Grid.Row="8" Margin="0,3,0,1"  />
-
-
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="307" FontWeight="Bold" FontSize="24" Height="32"><Run Language="ru-ru" Text="Редактировать"/><Run Text=" Товар"/></TextBlock>
+        <Label Content="Категория:" Margin="10,3,690,34" Grid.Row="2" Grid.RowSpan="2"  />
+        <ComboBox ItemsSource="{Binding productCategories }" SelectedItem="{Binding ListProductCategory}" DisplayMemberPath="Name" FontSize="20" Margin="115,2,540,5" Grid.Row="2"/>
+        <Label Content="Название товара:" Margin="10,7,663,3" Grid.Row="1"  />
+        <TextBox Text="{Binding NameProduct}" FontSize="20" Margin="160,8,10,2" Grid.Row="1"/>
+        <Label Content="Краткое описание товара:" Margin="10,2,617,41" Grid.Row="3" Grid.RowSpan="2"  />
+        <TextBox Text="{Binding ShortName}" Grid.Row="3" FontSize="20" Margin="188,2,10,4"/>
+        <Label Content="Изменить изображение:" Margin="326,2,299,0" Grid.Row="2"  />
+        <Button  Grid.Row="2" Command="{Binding EditImage}" Content="Выбрать"  FontSize="10" Margin="514,6,191,8" />
+        <Label Content="Количество товара:" Margin="10,5,645,4" Grid.Row="4"  />
+        <TextBox Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" FontSize="20" Margin="160,6,540,6" />
+        <Label Content="Цена поставщика:" Grid.Row="5" Margin="10,6,663,2"  />
+        <TextBox Text="{Binding PostavPriсе, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" FontSize="20" Margin="142,6,542,3" />
+        <Label Content="% наценки:" Grid.Row="6" Margin="10,4,704,9"  />
+        <TextBox Text="{Binding Markup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" FontSize="20" Margin="104,4,542,9"/>
+        <Label Content="Цена продажи:" Grid.Row="8" Margin="10,5,670,8"  />
+        <TextBlock Text="{Binding SellPrice, Mode=OneWay}" Grid.Row="8" FontSize="20" Margin="135,4,515,4" RenderTransformOrigin="0.618,0.507" />
+        <Image HorizontalAlignment="Left" Height="214" Margin="424,10,0,0" Source="{Binding Image}" VerticalAlignment="Top" Width="258" Grid.Row="4" Grid.RowSpan="5"/>
+        <Button Command="{Binding SaveButton}" Content="Изменить" Grid.Column="0" Grid.Row="8" Margin="275,51,277,0" Grid.RowSpan="2" />
 
     </Grid>
 </Window>
+
+

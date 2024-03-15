@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Reflection.Metadata;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace kurs11135.VM
 {
@@ -91,9 +92,22 @@ namespace kurs11135.VM
                 Signal();
             }
         }
+
+        private OrderProduct selectedProduct;
+        public OrderProduct SelectedProduct
+        {
+            get { return selectedProduct; }
+            set
+            {
+                selectedProduct = value;
+                Signal();
+            }
+        }
+
         public CommandVM SaveButton { get; set; }
         public CommandVM AddOrder { get; set; }
         public CommandVM DelOrder { get; set; }
+        public CommandVM RemoveProductFromOrderCommand { get; set; }
         public CommandVM EditOrder { get; }
         public decimal? CostOrder { get; set; }
         public string Count { get; set; }
@@ -165,6 +179,24 @@ namespace kurs11135.VM
                     MessageBox.Show("Некорректное количество для добавления в заказ.");
                 }
             });
+
+            RemoveProductFromOrderCommand = new CommandVM(() =>
+            {
+
+                if (SelectedProduct != null)
+                {
+                    SelectedProducts.Remove(SelectedProduct);
+                    CalculateSellPrice();
+                }
+
+            });
+
+
+
+
+
+
+
 
 
             SaveButton = new CommandVM(async () =>
