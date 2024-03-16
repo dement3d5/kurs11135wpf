@@ -4,19 +4,29 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:kurs11135"
+      xmlns:converters="clr-namespace:kurs11135.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Order">
 
+    <Page.Resources>
+        <converters:AlternatingBackgroundConverter x:Key="BackgroundConverter"/>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="41"/>
             <RowDefinition/>
 
 
         </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding orders}" SelectedItem="{Binding SelectedItem}" Grid.Row="1" FontSize="20" FontFamily="Comic Sans MS">
+
+        <ListView ItemsSource="{Binding orders}" Grid.Row="1" SelectedItem="{Binding SelectedItem}" FontSize="20" FontFamily="Comic Sans MS" Background="{x:Null}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Background" Value="{Binding Converter={StaticResource BackgroundConverter}, RelativeSource={RelativeSource Self}}"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status.Name}"/>
@@ -56,6 +66,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <TextBlock HorizontalAlignment="Center" Margin="0,-4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" FontWeight="Bold" FontSize="24" Height="32" Grid.Column="1" Grid.ColumnSpan="3"><Run Language="ru-ru" Text="Список заказов пользователей"/></TextBlock>
     </Grid>
     
 </Page>

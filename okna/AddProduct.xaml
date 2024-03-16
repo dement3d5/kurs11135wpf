@@ -32,7 +32,7 @@
         <Label Content="Краткое описание товара:" Margin="10,2,617,41" Grid.Row="3" Grid.RowSpan="2"  />
         <TextBox Text="{Binding ShortName}" Grid.Row="3" FontSize="20" Margin="188,2,10,4"/>
         <Label Content="Добавить изображение:" Margin="326,2,299,0" Grid.Row="2"  />
-        <Button  Grid.Row="2" Command="{Binding AddImage}" Content="Выбрать"  FontSize="10" Margin="514,6,191,8" />
+        <Button Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Grid.Row="2" Command="{Binding AddImage}" Content="Выбрать"  FontSize="10" Margin="514,6,191,8" />
         <Label Content="Количество товара:" Margin="10,5,645,4" Grid.Row="4"  />
         <TextBox Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" FontSize="20" Margin="160,6,540,6" />
         <Label Content="Цена поставщика:" Grid.Row="5" Margin="10,6,663,2"  />
@@ -42,7 +42,7 @@
         <Label Content="Цена продажи:" Grid.Row="8" Margin="10,5,670,8"  />
         <TextBlock Text="{Binding SellPrice, Mode=OneWay}" Grid.Row="8" FontSize="20" Margin="135,4,515,4" RenderTransformOrigin="0.618,0.507" />
         <Image HorizontalAlignment="Left" Height="214" Margin="424,10,0,0" Source="{Binding Image}" VerticalAlignment="Top" Width="258" Grid.Row="4" Grid.RowSpan="5"/>
-        <Button Command="{Binding SaveButton}" Content="Добавить" Grid.Column="0" Grid.Row="8" Margin="275,51,277,0" Grid.RowSpan="2" />
+        <Button Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Command="{Binding SaveButton}" Content="Добавить" Grid.Column="0" Grid.Row="8" Margin="275,51,277,0" Grid.RowSpan="2" />
 
     </Grid>
 </Window>

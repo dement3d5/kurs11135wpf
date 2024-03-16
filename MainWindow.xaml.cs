@@ -1,4 +1,5 @@
 ﻿using kurs11135;
+using kurs11135.okna;
 using kurs11135.Tools;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,11 @@ namespace kurs11135
 
         }
 
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            AuthLog al = new AuthLog();
+            al.Show();
+            this.Close();
+        }
     }
 }

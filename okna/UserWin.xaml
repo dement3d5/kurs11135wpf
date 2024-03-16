@@ -40,8 +40,8 @@
         Background="#FF3498DB" Foreground="White" BorderBrush="#FF3498DB"/>
 
         </StackPanel>
-        <Label VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Center" Content="Mагазин бытовой химии" Height="31" Width="196" Grid.Column="2"  />
 
+        <TextBlock HorizontalAlignment="Center" Margin="0,-4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="336" FontWeight="Bold" FontSize="24" Height="32" Grid.Column="1" Grid.ColumnSpan="3"><Run Language="ru-ru" Text="Магазин бытовой химии"/></TextBlock>
         <Frame x:Name="mainFrame"
                NavigationUIVisibility="Hidden"
                Content="{Binding CurrentPage}" 

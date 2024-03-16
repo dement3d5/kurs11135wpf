@@ -21,8 +21,8 @@
                 <Button Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Grid.Column="0" Command="{Binding Order}" Width="83" Height="43">Заказы</Button>
                 <Button Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Grid.Column="0" Command="{Binding Records}"  Width="68" Height="43">Учет</Button>
                 <Button Grid.Column="0" Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Command="{Binding Product}" Width="94" Height="43">Список Товара</Button>
+                <Button HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Width="94" Height="43" Grid.Column="1" Click="Button_Click">Выход</Button>
             </StackPanel>
-            <Label VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Left" Content="Учет продаж магазина бытовой химии" Height="31" Width="287" Grid.ColumnSpan="3" Margin="15,0,0,0" Grid.Column="1" />
 
         </Grid>
         <Frame x:Name="mainFrame"

@@ -4,10 +4,12 @@ using kurs11135.Tools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace kurs11135.VM
 {
@@ -89,6 +91,8 @@ namespace kurs11135.VM
                 Signal();
             }
         }
+
+
         public CommandVM SaveButton { get; set; }
         public CommandVM AddOrder { get; set; }
         public CommandVM DelOrder { get; set; }
