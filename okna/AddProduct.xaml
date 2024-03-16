@@ -32,7 +32,7 @@
         <Label Content="Краткое описание товара:" Margin="10,2,617,41" Grid.Row="3" Grid.RowSpan="2"  />
         <TextBox Text="{Binding ShortName}" Grid.Row="3" FontSize="20" Margin="188,2,10,4"/>
         <Label Content="Добавить изображение:" Margin="326,2,299,0" Grid.Row="2"  />
-        <Button  Grid.Row="2" Command="{Binding EditImage}" Content="Выбрать"  FontSize="10" Margin="514,6,191,8" />
+        <Button  Grid.Row="2" Command="{Binding AddImage}" Content="Выбрать"  FontSize="10" Margin="514,6,191,8" />
         <Label Content="Количество товара:" Margin="10,5,645,4" Grid.Row="4"  />
         <TextBox Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" FontSize="20" Margin="160,6,540,6" />
         <Label Content="Цена поставщика:" Grid.Row="5" Margin="10,6,663,2"  />
