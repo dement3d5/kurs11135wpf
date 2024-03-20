@@ -10,7 +10,7 @@
       Title="RecordsPage">
 
     <Viewbox>
-        <Grid Height="429" Width="730">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="553*"/>
                 <ColumnDefinition Width="247*"/>
@@ -40,16 +40,16 @@
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
             <Label Content="Стоимость товаров:" Height="41" Width="208" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="24,10,0,0" Grid.Row="3"/>
-            <TextBlock Text="{Binding AllProductPrice}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="41" FontSize="20" Margin="237,15,0,0" Grid.Row="3" Grid.RowSpan="2" />
+            <TextBlock Text="{Binding AllProductPrice}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Height="41" FontSize="20" Margin="237,10,0,0" Grid.Row="3" />
             <Label Content="Прибыль:" Height="40" Width="104" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="24,0,0,0" Grid.Row="2"/>
-            <TextBlock Text="{Binding TotalProfit}" Width="140" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" Margin="133,5,0,0" Grid.Row="2" Grid.RowSpan="2" />
+            <TextBlock Text="{Binding TotalProfit}" Width="140" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Margin="133,0,0,0" Grid.Row="2" />
             <ComboBox ItemsSource="{Binding AvailableMonths}"  SelectedItem="{Binding SelectedMonth, Mode=TwoWay}"  Width="154" Height="30" SelectionChanged="ComboBox_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" BorderBrush="White" RenderTransformOrigin="0.506,1.233" Margin="183,16,0,0"/>
             <Label Content="Выбрать месяц:" Height="40" Width="154" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="24,11,0,0"/>
 
         </Grid>
     </Viewbox>
-
-
+    
+    
 
 
 
