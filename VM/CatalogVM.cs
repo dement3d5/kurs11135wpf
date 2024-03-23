@@ -43,7 +43,7 @@ namespace kurs11135.VM
                 if (_searchQuery != value)
                 {
                     _searchQuery = value;
-                    FilterProducts(); // После изменения поискового запроса перефильтровываем продукты
+                    FilterProducts(); 
                     Signal(nameof(SearchQuery));
                 }
             }
