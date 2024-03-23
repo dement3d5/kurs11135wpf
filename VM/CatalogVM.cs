@@ -33,15 +33,77 @@ namespace kurs11135.VM
             }
         }
 
-      
+        private string _searchQuery;
 
+        public string SearchQuery
+        {
+            get { return _searchQuery; }
+            set
+            {
+                if (_searchQuery != value)
+                {
+                    _searchQuery = value;
+                    FilterProducts(); // После изменения поискового запроса перефильтровываем продукты
+                    Signal(nameof(SearchQuery));
+                }
+            }
+        }
+
+
+        public List<ProductCategory> ProductCategories { get; set; }
         public List<Product> products { get; set; }
         public Product product { get; set; }
         public Product SelectedItem { get; set; }
-
+        public List<Product> FilteredProducts { get; set; }
         public byte[]? Image { get => image; set { image = value; Signal(); } }
         public string NameProduct { get; set; }
         public string ShortName { get; set; }
+
+        private async Task LoadProducts()
+        {
+            string json = await Api.Post("Products", null, "get");
+            products = Api.Deserialize<List<Product>>(json);
+            FilterProducts(); 
+        }
+
+        private void FilterProducts()
+        {
+            if (!string.IsNullOrEmpty(SearchQuery))
+            {
+           
+                FilteredProducts = products.Where(p =>
+                    p.ProductName.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                    p.ShortDescription.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            else if (SelectedCategory != null && SelectedCategory.Id != -1)
+            {
+     
+                FilteredProducts = products.Where(p => p.Category?.Id == SelectedCategory.Id).ToList();
+            }
+            else
+            {
+           
+                FilteredProducts = products.ToList();
+            }
+            Signal(nameof(FilteredProducts));
+        }
+
+
+        private ProductCategory _selectedCategory;
+        public ProductCategory SelectedCategory
+        {
+            get { return _selectedCategory; }
+            set
+            {
+                if (_selectedCategory != value)
+                {
+                    _selectedCategory = value;
+                    Signal(nameof(SelectedCategory));
+                    FilterProducts(); 
+                }
+            }
+        }
+
 
 
         //public void Cleanup()
@@ -110,12 +172,21 @@ namespace kurs11135.VM
 
             string json = await Api.Post("ProductCategories", null, "get");
             var result = Api.Deserialize<List<ProductCategory>>(json);
-            productCategories = result;
-            Signal(nameof(productCategories));
+            ProductCategories = result;
 
 
 
+            AllProductCategories = new List<ProductCategory>(result);
+            AllProductCategories.Insert(0, new ProductCategory { Id = -1, Name = "Все категории" });
+
+            
+            SelectedCategory = AllProductCategories.FirstOrDefault();
+
+            Signal(nameof(AllProductCategories));
         }
+
+
+        public List<ProductCategory> AllProductCategories { get; set; }
 
         public List<ProductCategory> productCategories { get; set; }
         private ProductCategory listProductCategory;
@@ -135,6 +206,7 @@ namespace kurs11135.VM
     }
 
 
+    
 
 
 
