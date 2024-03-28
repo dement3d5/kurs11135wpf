@@ -92,7 +92,7 @@ namespace kurs11135.VM
             }
         }
 
-
+        public CommandVM FilterOrdersCommand { get; set; }
         public CommandVM SaveButton { get; set; }
         public CommandVM AddOrder { get; set; }
         public CommandVM DelOrder { get; set; }
@@ -131,6 +131,7 @@ namespace kurs11135.VM
             }
         }
 
+      
 
         public User User { get; private set; }
 
@@ -145,7 +146,10 @@ namespace kurs11135.VM
                 OnAddProductToOrder(ListProduct, Quantity);
             });
 
-
+            FilterOrdersCommand = new CommandVM(async () =>
+            {
+                await LoadOrdersByDate(CreateAt);
+            });
 
             Task.Run(async () =>
             {
@@ -204,13 +208,33 @@ namespace kurs11135.VM
         }
 
 
+        public async Task LoadOrdersByDate(DateTime selectedDate)
+        {
+            try
+            {
+                string filterDate = selectedDate.ToString("yyyy-MM-dd");
+                string json = await Api.Post("Orders", filterDate, "getByDate");
+                var result = Api.Deserialize<List<Order>>(json);
+                orders = result;
+                Signal(nameof(orders));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке заказов: {ex.Message}");
+            }
+        }
+
+
+
+
+
 
 
     }
 
 
-       
 
-       
-    
+
+
+
 }

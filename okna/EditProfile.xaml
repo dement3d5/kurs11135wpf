@@ -1,0 +1,64 @@
+﻿<Window x:Class="kurs11135.EditProfile"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kurs11135"
+        mc:Ignorable="d"
+        Title="EditProfile" MaxHeight="450" MaxWidth="800" MinHeight="450" MinWidth="800">
+    <Grid Background="#F0F0F0">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Command="{Binding SaveProfileCommand}" Content="Сохранить" Background="#007ACC" Foreground="White" Padding="10,5" Margin="253,286,254,58" Grid.ColumnSpan="2" Grid.Row="1"/>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="517*"/>
+                <ColumnDefinition Width="283*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Margin="20,20,20,20" Grid.ColumnSpan="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Логин: " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding EditedUser.Login}" FontSize="20" Grid.Column="1" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Margin="0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Имя: " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding EditedUser.FirstName}" FontSize="20" Grid.Column="1" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Margin="0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Фамилия: " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding EditedUser.LastName}" FontSize="20" Grid.Column="1" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Margin="0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Подтверждение пароля: " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <PasswordBox x:Name="passwordBox" FontSize="20" Grid.Column="1" VerticalAlignment="Center"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="244,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="316" Height="30" FontSize="24" FontWeight="Bold" Grid.ColumnSpan="2"><Run Language="ru-ru" Text="Редактирование профиля"/></TextBlock>
+    </Grid>
+</Window>

@@ -18,6 +18,7 @@ namespace kurs11135.VM
         public CommandVM AddProduct { get; set; }
         public CommandVM AddImage { get; set; }
         public CommandVM SaveButton { get; set; }
+        public CommandVM ComingProduct { get; set; }
         public CommandVM EditProduct { get; set; }
         public Product SelectedItem { get; set; }
         public CommandVM DelProduct { get; set; }
@@ -148,7 +149,12 @@ namespace kurs11135.VM
                
             });
 
+            ComingProduct = new CommandVM(() =>
+            {
 
+                ComingProductWin cp = new ComingProductWin();
+                cp.Show();
+            });
             
 
                

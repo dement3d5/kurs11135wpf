@@ -12,11 +12,29 @@ namespace kurs11135.VM
     {
         public User User { get; private set; }
       
+        public CommandVM EditProfile { get; set; }
+
+
         public ProfileVM(User user) 
         {
             User = user;
+
+
+            EditProfile = new CommandVM(() =>
+            {
+
+                EditProfile ep = new EditProfile(user);
+                ep.Show();
+
+            });
+
+
+
         }
 
+
+
+        
 
     }
 }

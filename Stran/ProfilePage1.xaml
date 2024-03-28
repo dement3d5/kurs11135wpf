@@ -10,8 +10,7 @@
     <Grid Background="#F0F0F0">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="50"/>
@@ -19,10 +18,10 @@
         </Grid.RowDefinitions>
 
 
-            <Button Command="{Binding EditProfile}" Content="Редактировать" Background="#007ACC" Foreground="White" Padding="10,5" Margin="10,5,17,5"/>
-   
+        <Button Visibility="Hidden" Command="{Binding EditProfile}" Content="Редактировать" Background="#007ACC" Foreground="White" Padding="10,5" Margin="10,5,497,5"/>
 
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+
+        <Grid Grid.Row="1">
 
             <StackPanel Margin="20">
                 <Grid>
@@ -59,6 +58,6 @@
                 </Grid>
             </StackPanel>
         </Grid>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="10,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" Height="30" FontSize="24" FontWeight="Bold"><Run Language="ru-ru" Text="Профиль"/></TextBlock>
+        <TextBlock  Text="Профиль" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold" Margin="0,1,0,1" Width="119"/>
     </Grid>
 </Page>

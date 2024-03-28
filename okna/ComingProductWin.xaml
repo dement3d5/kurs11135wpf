@@ -1,0 +1,50 @@
+﻿<Window x:Class="kurs11135.okna.ComingProductWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kurs11135.okna"
+        mc:Ignorable="d"
+        Title="ComingProductWin" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="66.5754545454545"/>
+            <RowDefinition Height="77*"/>
+            <RowDefinition Height="194*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Margin="10,10,10,10" FontSize="24" FontWeight="Bold"><Run Language="ru-ru" Text="Приходная"/></TextBlock>
+
+        <Grid Grid.Row="1" Margin="10,10,10,56">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <ComboBox ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" DisplayMemberPath="ProductName" FontSize="16" Margin="118,11,504,17" Grid.Row="1"/>
+        <TextBox Text="{Binding Quantity}" Margin="174,19,533,23" Grid.Row="2" />
+        <Button Command="{Binding AddProductToComingCommand}" Content="Поставить на приход" Background="White" Margin="324,35,318,10" Grid.Row="2" />
+
+        <ListBox  ItemsSource="{Binding SelectedComingProducts}" Grid.Row="3" Margin="28,10,38,10">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Product.ProductName}" Width="100" />
+                        <TextBlock Text="{Binding Count}" Width="50" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Left" Margin="220,6,0,9" Width="330">
+            <Button Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Content="Удалить товар" Command="{Binding RemoveComingProductCommand}" Width="150" Margin="5"/>
+            <Button Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Content="Оформить" Width="150" Margin="5" Command="{Binding SaveButton}"/>
+        </StackPanel>
+        <TextBlock Text="Выбрать товар:" Margin="10,18,682,18" Grid.Row="1"/>
+        <TextBlock Margin="10,22,631,26" Grid.Row="2"><Run Text="Выбрать "/><Run Text="количество (шт"/><Run Language="ru-ru" Text="."/><Run Text=")"/></TextBlock>
+    </Grid>
+</Window>

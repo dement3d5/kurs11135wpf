@@ -4,6 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:kurs11135"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+
       xmlns:converters="clr-namespace:kurs11135.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -15,13 +17,18 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" MinHeight="41"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="42"/>
             <RowDefinition/>
 
 
         </Grid.RowDefinitions>
-
-        <ListView ItemsSource="{Binding orders}" Grid.Row="1" SelectedItem="{Binding SelectedItem}" FontSize="20" FontFamily="Comic Sans MS" Background="{x:Null}">
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1">
+            <DatePicker SelectedDate="{Binding CreateAt}" DisplayDateEnd="{x:Static sys:DateTime.Today}" Width="189" Height="27" />
+            <Button Content="Фильтр" Command="{Binding FilterOrdersCommand}" Width="130" Height="30" />
+        </StackPanel>
+       
+        <ListView ItemsSource="{Binding orders}" Grid.Row="2" SelectedItem="{Binding SelectedItem}" FontSize="20" FontFamily="Comic Sans MS" Background="{x:Null}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Background" Value="{Binding Converter={StaticResource BackgroundConverter}, RelativeSource={RelativeSource Self}}"/>
@@ -66,7 +73,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock HorizontalAlignment="Center" Margin="0,-4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" FontWeight="Bold" FontSize="24" Height="32" Grid.Column="1" Grid.ColumnSpan="3"><Run Language="ru-ru" Text="Список заказов пользователей"/></TextBlock>
+        <TextBlock HorizontalAlignment="Center" Margin="0,-4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="372" FontWeight="Bold" FontSize="24" Height="32"><Run Language="ru-ru" Text="Список заказов пользователей"/></TextBlock>
     </Grid>
-    
+
 </Page>

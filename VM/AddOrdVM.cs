@@ -144,7 +144,29 @@ namespace kurs11135.VM
             }
         }
 
-       
+        private ObservableCollection<Product> _products;
+        public ObservableCollection<Product> Products
+        {
+            get { return _products; }
+            set
+            {
+                _products = value;
+                FilteredProducts = new ObservableCollection<Product>(_products.Where(p => int.Parse(p.Quantity) > 0));
+                Signal(nameof(FilteredProducts));
+            }
+        }
+
+        private ObservableCollection<Product> _filteredProducts;
+        public ObservableCollection<Product> FilteredProducts
+        {
+            get { return _filteredProducts; }
+            set
+            {
+                _filteredProducts = value;
+                Signal(nameof(FilteredProducts));
+            }
+        }
+
 
 
 
@@ -194,17 +216,33 @@ namespace kurs11135.VM
 
 
 
-
-
-
-
-
             SaveButton = new CommandVM(async () =>
             {
                 if (SelectedProducts != null && SelectedProducts.Any())
                 {
                     CalculateSellPrice();
 
+                    foreach (var orderProduct in SelectedProducts)
+                    {
+                        Product product = Products.FirstOrDefault(p => p.Id == orderProduct.ProductId);
+                        if (product != null)
+                        {
+                            int newQuantity = Convert.ToInt32(product.Quantity) - Convert.ToInt32(orderProduct.Count);
+
+                            if (newQuantity >= 0)
+                            {
+                                product.Quantity = newQuantity.ToString();
+
+                                var json1 = await Api.Post("Products", product, "put");
+
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Невозможно оформить заказ. Недостаточно товара {product.ProductName} на складе.");
+                                return;
+                            }
+                        }
+                    }
 
                     var order = new Order
                     {
@@ -216,42 +254,70 @@ namespace kurs11135.VM
                     };
                     var json = await Api.Post("Orders", order, "SaveOrder");
                     var result = Api.Deserialize<Order>(json);
-
-                    if (result != null)
-                    {
-
-                        foreach (var orderProduct in SelectedProducts)
-                        {
-                            Product product = products.FirstOrDefault(p => p.Id == orderProduct.ProductId);
-                            if (product != null)
-                            {
-                                int newQuantity = Convert.ToInt32(product.Quantity) - Convert.ToInt32(orderProduct.Count);
-
-                                if (newQuantity >= 0)
-                                {
-                                    product.Quantity = newQuantity.ToString();
-
-                                    json = await Api.Post("Products", product, "put");
-                        
-                                }
-                            }
-                        }
-
-                     
                         await che();
 
                         MessageBox.Show("Заказ успешно оформлен.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ошибка при сохранении заказа.");
-                    }
+                    
                 }
-                else
-                {
-                    MessageBox.Show("Не выбраны товары для заказа.");
-                }
+               
             });
+
+
+
+
+            //SaveButton = new CommandVM(async () =>
+            //{
+            //    if (SelectedProducts != null && SelectedProducts.Any())
+            //    {
+            //        CalculateSellPrice();
+
+
+            //        var order = new Order
+            //        {
+            //            CreateAt = CreateAt,
+            //            Cost = CostOrder,
+            //            OrderProducts = SelectedProducts.ToList(),
+            //            StatusId = 1,
+            //            UserId = CurrentUser.Id
+            //        };
+            //        var json = await Api.Post("Orders", order, "SaveOrder");
+            //        var result = Api.Deserialize<Order>(json);
+
+            //        if (result != null)
+            //        {
+
+            //            foreach (var orderProduct in SelectedProducts)
+            //            {
+            //                Product product = products.FirstOrDefault(p => p.Id == orderProduct.ProductId);
+            //                if (product != null)
+            //                {
+            //                    int newQuantity = Convert.ToInt32(product.Quantity) - Convert.ToInt32(orderProduct.Count);
+
+            //                    if (newQuantity >= 0)
+            //                    {
+            //                        product.Quantity = newQuantity.ToString();
+
+            //                        json = await Api.Post("Products", product, "put");
+                        
+            //                    }
+            //                }
+            //            }
+
+                     
+            //            await che();
+
+            //            MessageBox.Show("Заказ успешно оформлен.");
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Ошибка при сохранении заказа.");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Не выбраны товары для заказа.");
+            //    }
+            //});
 
 
 
@@ -339,8 +405,8 @@ namespace kurs11135.VM
 
             string json1 = await Api.Post("Products", null, "get");
             var result2 = Api.Deserialize<List<Product>>(json1);
-            products = result2;
-            Signal(nameof(products));
+            Products = new ObservableCollection<Product>(result2); 
+            Signal(nameof(Products));
 
             string json3 = await Api.Post("Users", null, "get");
             var result3 = Api.Deserialize<List<User>>(json3);

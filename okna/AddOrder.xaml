@@ -22,7 +22,7 @@
             <TextBlock Text="Дата заказа:" Margin="0,0,10,0" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" VerticalAlignment="Center" FontSize="18" Text="{Binding CreateAt}"/>
         </Grid>
-        <ComboBox ItemsSource="{Binding products}" SelectedItem="{Binding ListProduct}" DisplayMemberPath="ProductName" FontSize="16" Margin="132,4,490,10" Grid.Row="2"/>
+        <ComboBox ItemsSource="{Binding FilteredProducts}" SelectedItem="{Binding ListProduct}" DisplayMemberPath="ProductName" FontSize="16" Margin="132,4,490,10" Grid.Row="2"/>
         <TextBox  Text="{Binding Quantity}" Margin="174,19,533,23" Grid.Row="3" />
         <Button  Command="{Binding AddProductToOrderCommand}" Content="Добавить товар" Background="White" Margin="324,35,334,10" Grid.Row="3" />
         <TextBlock Text="{Binding CostOrder, Mode=OneWay}"  FontSize="20" Margin="643,19,25,23" Grid.Row="3" />

@@ -1,6 +1,4 @@
-﻿using kurs11135;
-using kurs11135.okna;
-using kurs11135.VM;
+﻿using kurs11135.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,24 +11,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace kurs11135.Stran
+namespace kurs11135
 {
     /// <summary>
-    /// Логика взаимодействия для ProfilePage1.xaml
+    /// Логика взаимодействия для EditProfile.xaml
     /// </summary>
-    public partial class ProfilePage1 : Page
+    public partial class EditProfile : Window
     {
-        
-        public ProfilePage1(User user)
+        public EditProfile(User user)
         {
-           InitializeComponent();
-            DataContext = new ProfileVM(user);
+            InitializeComponent();
+            DataContext = new EditProfileVM(user);
         }
-
-
-
     }
 }

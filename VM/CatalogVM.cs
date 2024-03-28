@@ -70,20 +70,15 @@ namespace kurs11135.VM
         {
             if (!string.IsNullOrEmpty(SearchQuery))
             {
-           
-                FilteredProducts = products.Where(p =>
-                    p.ProductName.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase) ||
-                    p.ShortDescription.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+                FilteredProducts = products.Where(p => (p.ProductName.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase) || p.ShortDescription.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)) && p.Quantity != null && int.TryParse(p.Quantity, out int quantity) && quantity > 0).ToList();
             }
             else if (SelectedCategory != null && SelectedCategory.Id != -1)
             {
-     
-                FilteredProducts = products.Where(p => p.Category?.Id == SelectedCategory.Id).ToList();
+                FilteredProducts = products.Where(p => p.Category?.Id == SelectedCategory.Id && p.Quantity != null && int.TryParse(p.Quantity, out int quantity) && quantity > 0).ToList();
             }
             else
             {
-           
-                FilteredProducts = products.ToList();
+                FilteredProducts = products.Where(p => p.Quantity != null && int.TryParse(p.Quantity, out int quantity) && quantity > 0).ToList();
             }
             Signal(nameof(FilteredProducts));
         }

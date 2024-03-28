@@ -1,6 +1,4 @@
-﻿using kurs11135;
-using kurs11135.okna;
-using kurs11135.VM;
+﻿using kurs11135.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,24 +11,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace kurs11135.Stran
+namespace kurs11135.okna
 {
     /// <summary>
-    /// Логика взаимодействия для ProfilePage1.xaml
+    /// Логика взаимодействия для ComingProductWin.xaml
     /// </summary>
-    public partial class ProfilePage1 : Page
+    public partial class ComingProductWin : Window
     {
-        
-        public ProfilePage1(User user)
+        public ComingProductWin()
         {
-           InitializeComponent();
-            DataContext = new ProfileVM(user);
+            InitializeComponent();
+            DataContext = new ComingProductVM();
         }
-
-
-
     }
 }

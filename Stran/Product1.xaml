@@ -57,6 +57,7 @@
             <Button  Background="#007ACC" Foreground="White" Command="{Binding AddProduct}" Content="Добавить" Width="100" Margin="5"/>
             <Button  Background="#007ACC" Foreground="White" Command="{Binding EditProduct}" Content="Редактировать" Width="100" Margin="5"/>
             <Button  Background="#007ACC" Foreground="White" Command="{Binding DelProduct}" Content="Удалить" Width="100" Margin="5"/>
+            <Button  Background="#007ACC" Foreground="White" Command="{Binding ComingProduct}" Content="Приход" Width="100" Margin="5"/>
         </StackPanel>
     </Grid>
 </Page>
