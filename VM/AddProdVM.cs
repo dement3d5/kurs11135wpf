@@ -118,8 +118,7 @@ namespace kurs11135.VM
                 {
                     await che();
                 });
-
-                //коммит снизу к этому
+                //
                 CloseWindow();
             });
 
