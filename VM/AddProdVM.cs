@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Windows;
@@ -87,6 +88,14 @@ namespace kurs11135.VM
 
             SaveButton = new CommandVM( async () =>
             {
+
+                bool productExists = products.Any(p => p.ProductName == NameProduct);
+
+                if (productExists)
+                {
+                    MessageBox.Show("Товар с таким названием уже существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 var json3 = await Api.Post("ProductImages", new ProductImage { Image = Image }, "get");
                 var image = Api.Deserialize<ProductImage>(json3);
                 CalculateSellPrice();
@@ -109,7 +118,14 @@ namespace kurs11135.VM
                 {
                     await che();
                 });
+
+                //коммит снизу к этому
+                CloseWindow();
             });
+
+
+
+
 
             Task.Run(async () =>
             {
@@ -200,7 +216,21 @@ namespace kurs11135.VM
 
 
         }
-       
+        //ко всем потом надо!
+        private async void CloseWindow()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window.DataContext == this)
+                    {
+                        window.Close();
+                        break;
+                    }
+                }
+            });
+        }
 
 
 

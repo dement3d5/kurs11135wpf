@@ -19,7 +19,28 @@ namespace kurs11135.VM
         public Product SelectedItem { get; set; }
 
 
+        private List<ProductCategory> productCategories;
+        public List<ProductCategory> ProductCategories
+        {
+            get => productCategories; 
+            set
+            {
+                productCategories = value;
+                Signal();
+            }
+        }
 
+        private ProductCategory selectedCategory;
+
+        public ProductCategory SelectedCategory
+        {
+            get { return selectedCategory; }
+            set
+            {
+                selectedCategory = value;
+                Signal();
+            }
+        }
 
         public CommandVM DelProduct { get; set; }
 
@@ -113,18 +134,27 @@ namespace kurs11135.VM
 
         }
 
-
+      
 
         public EditProdVM(Product selectedProduct)
         {
-           product = selectedProduct;
+
+            Task.Run(async () =>
+            {
+                await che();
+                SelectedCategory = ProductCategories.FirstOrDefault(category => category.Id == selectedProduct.CategoryId);
+            });
+
+            product = selectedProduct;
+            Image = selectedProduct.Image?.Image;
+           
             SaveButton = new CommandVM(async () =>
              {
                  var json3 = await Api.Post("ProductImages", new ProductImage { Id = selectedProduct.Image.Id, Image = Image }, "put");
                  var json1 = await Api.Post("Products", new Product
                  {
                      Id = selectedProduct.Id,
-                     CategoryId = ListProductCategory.Id,
+                     CategoryId = SelectedCategory.Id,
                      ProductName = NameProduct,
                      PostavPriсе = PostavPriсе,
                      Quantity = Quantity,
@@ -165,36 +195,17 @@ namespace kurs11135.VM
                 //UpdateList();
 
             });
-
+            ProductCategories = new List<ProductCategory>();
         }
 
-        public List<ProductCategory> ProductCategory
-        {
-            get => productCategory;
-            set
-            {
-                productCategory = value;
-                Signal();
-            }
-        }
+     
+
 
         private byte[]? image;
         private List<ProductCategory> productCategory;
 
-        public ProductCategory ListProductCategory
-        {
-            get => product.Category;
-            set
-            {
-                if(product != null)
-                {
-                    product.Category = value;
-                  
-                    Signal(nameof(ListProductCategory));
+      
 
-                }
-            }
-        }
 
         public async Task che()
         {
@@ -206,8 +217,8 @@ namespace kurs11135.VM
 
             string json = await Api.Post("ProductCategories", null, "get");
             var result = Api.Deserialize<List<ProductCategory>>(json);
-            productCategory = result;
-            Signal(nameof(productCategory));
+            ProductCategories = result;
+            Signal(nameof(ProductCategories));
 
 
 
