@@ -17,7 +17,14 @@ namespace kurs11135.Converters
                 if (listView != null)
                 {
                     int index = listView.ItemContainerGenerator.IndexFromContainer(listViewItem);
-                    return index % 2 == 0 ? Brushes.White : new SolidColorBrush(Color.FromRgb(230, 230, 230));
+                    if (listViewItem.DataContext is Order order && order.Status?.Name == "Готов к выдаче")
+                    {
+                        return Brushes.LightGreen;
+                    }
+                    else
+                    {
+                        return index % 2 == 0 ? Brushes.White : new SolidColorBrush(Color.FromRgb(230, 230, 230));
+                    }
                 }
             }
             return Brushes.Transparent;

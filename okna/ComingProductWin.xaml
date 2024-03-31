@@ -27,7 +27,7 @@
         <TextBox Text="{Binding Quantity}" Margin="174,19,533,23" Grid.Row="2" />
         <Button Command="{Binding AddProductToComingCommand}" Content="Поставить на приход" Background="White" Margin="324,35,318,10" Grid.Row="2" />
 
-        <ListBox  ItemsSource="{Binding SelectedComingProducts}" Grid.Row="3" Margin="28,10,38,10">
+        <ListBox ItemsSource="{Binding SelectedComingProducts}" SelectedItem="{Binding SelectedComingProduct}" Grid.Row="3" Margin="28,10,38,10">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -41,7 +41,7 @@
 
 
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Left" Margin="220,6,0,9" Width="330">
-            <Button Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Content="Удалить товар" Command="{Binding RemoveComingProductCommand}" Width="150" Margin="5"/>
+            <Button Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Content="Удалить товар" Command="{Binding RemoveSelectedProductCommand}" Width="150" Margin="5"/>
             <Button Foreground="White" Background="#FF3498DB" BorderBrush="#FF3498DB" Content="Оформить" Width="150" Margin="5" Command="{Binding SaveButton}"/>
         </StackPanel>
         <TextBlock Text="Выбрать товар:" Margin="10,18,682,18" Grid.Row="1"/>

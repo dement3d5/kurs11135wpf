@@ -30,6 +30,12 @@ namespace kurs11135
             DataContext = new AdminOrdersVM(currentUser);
 
         }
+       
+      
+
+       
+
+
 
     }
 }

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace kurs11135.VM
@@ -130,8 +131,26 @@ namespace kurs11135.VM
                 Signal();
             }
         }
+        public async void ExecuteMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ListViewItem item = sender as ListViewItem;
+                if (item != null && SelectedItem != null)
+                {
+                    await UpdateOrderStatus(SelectedItem.Id, 2); 
+                                                                 
+                    await LoadAllOrders();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при обновлении статуса заказа: {ex.Message}");
+            }
+        }
 
-      
+
+
 
         public User User { get; private set; }
 
@@ -181,6 +200,13 @@ namespace kurs11135.VM
             CostOrder = SelectedProducts.Sum(op => op.Product.SellPrice * int.Parse(op.Count));
             Signal(nameof(CostOrder));
         }
+        public async Task UpdateOrderStatus(int orderId, int newStatusId)
+        {
+
+            string json = await Api.Post("Orders", new { OrderId = orderId, NewStatusId = newStatusId }, "put");
+
+        }
+
 
 
         public async Task LoadAllOrders()

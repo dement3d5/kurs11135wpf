@@ -168,7 +168,20 @@ namespace kurs11135.VM
         }
 
 
-
+        private async void CloseWindow()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window.DataContext == this)
+                    {
+                        window.Close();
+                        break;
+                    }
+                }
+            });
+        }
 
 
 
@@ -185,21 +198,25 @@ namespace kurs11135.VM
 
             AddProductToOrderCommand = new CommandVM(() =>
             {
-                if (int.TryParse(Quantity, out inputQuantity))
+                if (ListProduct == null)
                 {
-                    if (ListProduct != null && inputQuantity <= int.Parse(ListProduct.Quantity))
-                    {
-                        OnAddProductToOrder(ListProduct, Quantity);
-                    }
-                    else
-                    {
-                        MessageBox.Show($"Невозможно добавить {inputQuantity} единиц товара {ListProduct?.ProductName}, так как на складе осталось только {ListProduct?.Quantity} единиц.");
-                    }
+                    MessageBox.Show("Пожалуйста, выберите товар.");
+                    return;
                 }
-                else
+
+                if (!int.TryParse(Quantity, out int inputQuantity) || inputQuantity <= 0)
                 {
-                    MessageBox.Show("Некорректное количество для добавления в заказ.");
+                    MessageBox.Show("Некорректное количество товара. Пожалуйста, введите положительное целое число.");
+                    return;
                 }
+
+                if (inputQuantity > int.Parse(ListProduct.Quantity))
+                {
+                    MessageBox.Show($"Невозможно добавить {inputQuantity} единиц товара {ListProduct.ProductName}, так как на складе осталось только {ListProduct.Quantity} единиц.");
+                    return;
+                }
+
+                OnAddProductToOrder(ListProduct, Quantity);
             });
 
             RemoveProductFromOrderCommand = new CommandVM(() =>
@@ -257,7 +274,8 @@ namespace kurs11135.VM
                         await che();
 
                         MessageBox.Show("Заказ успешно оформлен.");
-                    
+
+                    CloseWindow();
                 }
                
             });

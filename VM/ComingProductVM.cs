@@ -53,6 +53,32 @@ namespace kurs11135.VM
             }
         }
 
+        private OrderProduct selectedComingProduct;
+        public OrderProduct SelectedComingProduct
+        {
+            get => selectedComingProduct;
+            set
+            {
+                selectedComingProduct = value;
+                Signal();
+            }
+        }
+        private async void CloseWindow()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window.DataContext == this)
+                    {
+                        window.Close();
+                        break;
+                    }
+                }
+            });
+        }
+
+
         public ComingProductVM()
         {
             LoadProducts();
@@ -83,9 +109,16 @@ namespace kurs11135.VM
                 }
                 MessageBox.Show("Приход товара успешно зарегистрирован.");
                 LoadProducts(); 
+                CloseWindow();
             });
 
-
+            RemoveSelectedProductCommand = new CommandVM(() =>
+            {
+                if (SelectedComingProduct != null)
+                {
+                    SelectedComingProducts.Remove(SelectedComingProduct);
+                }
+            });
 
         }
 
@@ -120,6 +153,7 @@ namespace kurs11135.VM
 
 
         public CommandVM SaveButton { get; set; }
+        public CommandVM RemoveSelectedProductCommand { get; set; }
         public CommandVM AddProductToComingCommand { get; }
     }
 }

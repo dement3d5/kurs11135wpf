@@ -25,6 +25,7 @@ namespace kurs11135.okna
         {
             InitializeComponent();
             DataContext = new EditProdVM(product);
+           
         }
     }
 }

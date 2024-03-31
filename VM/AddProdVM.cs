@@ -2,6 +2,7 @@
 using kurs11135.okna;
 using kurs11135.Tools;
 using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -81,25 +82,75 @@ namespace kurs11135.VM
 
         public AddProdVM()
         {
-          
 
 
-           
 
-            SaveButton = new CommandVM( async () =>
+
+
+            SaveButton = new CommandVM(async () =>
             {
-
-                bool productExists = products.Any(p => p.ProductName == NameProduct);
-
-                if (productExists)
+              
+                if (ListProductCategory == null || string.IsNullOrWhiteSpace(NameProduct) || string.IsNullOrWhiteSpace(ShortName) || string.IsNullOrWhiteSpace(Quantity) || string.IsNullOrWhiteSpace(PostavPriсе.ToString()) || string.IsNullOrWhiteSpace(Markup.ToString()))
                 {
-                    MessageBox.Show("Товар с таким названием уже существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Пожалуйста, заполните все данные.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                var json3 = await Api.Post("ProductImages", new ProductImage { Image = Image }, "get");
-                var image = Api.Deserialize<ProductImage>(json3);
+
+                
+                if (!int.TryParse(Quantity, out int parsedQuantity) || parsedQuantity <= 0)
+                {
+                    MessageBox.Show("Некорректное количество товара. Пожалуйста, введите положительное целое число.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+               
+                if (!decimal.TryParse(PostavPriсе.ToString(), out decimal parsedPostavPrice) || parsedPostavPrice <= 0)
+                {
+                    MessageBox.Show("Некорректная цена поставщика. Пожалуйста, введите положительное числовое значение.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+              
+                if (!IsDecimalValid(PostavPriсе.ToString()))
+                {
+                    MessageBox.Show("Некорректный формат цены поставщика. Пожалуйста, введите число с использованием цифр и десятичного разделителя.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+               
+                if (!decimal.TryParse(Markup.ToString(), out decimal parsedMarkup) || parsedMarkup < 0)
+                {
+                    MessageBox.Show("Некорректная наценка. Пожалуйста, введите положительное числовое значение или 0.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                
+                if (!IsDecimalValid(Markup.ToString()))
+                {
+                    MessageBox.Show("Некорректный формат наценки. Пожалуйста, введите число с использованием цифр и десятичного разделителя.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+               
+                if (Image == null)
+                {
+                    MessageBox.Show("Пожалуйста, выберите изображение товара.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+              
+                if (products.Any(p => p.ProductName.Equals(NameProduct, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show("Товар с таким названием уже существует. Пожалуйста, выберите другое название.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                
                 CalculateSellPrice();
 
+               
+                var json3 = await Api.Post("ProductImages", new ProductImage { Image = Image }, "get");
+                var image = Api.Deserialize<ProductImage>(json3);
                 var json1 = await Api.Post("Products", new Product
                 {
                     CategoryId = ListProductCategory.Id,
@@ -112,15 +163,17 @@ namespace kurs11135.VM
                     ImageId = image.Id
                 }, "SaveProduct");
                 Product result1 = Api.Deserialize<Product>(json1);
-                MessageBox.Show("Скорее всего добавилось");
 
-                Task.Run(async () =>
-                {
-                    await che();
-                });
-                //
+                MessageBox.Show("Товар успешно добавлен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+
+              
                 CloseWindow();
             });
+
+          
+           
+
+
 
 
 
@@ -151,18 +204,30 @@ namespace kurs11135.VM
             });
             DelProduct = new CommandVM(async () =>
             {
-                var json1 = await Api.Post("Products", SelectedItem.Id , "delete");
-                che();
+                
+                if (SelectedItem == null)
+                {
+                    MessageBox.Show("Пожалуйста, выберите товар для удаления.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
+                var json1 = await Api.Post("Products", SelectedItem.Id, "delete");
+                che();
             });
 
             EditProduct = new CommandVM(async () =>
             {
               
-               product = SelectedItem; 
+                if (SelectedItem == null)
+                {
+                    MessageBox.Show("Пожалуйста, выберите товар для редактирования.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                product = SelectedItem;
                 new EditProduct(product).Show();
-               
             });
+
 
             ComingProduct = new CommandVM(() =>
             {
@@ -174,8 +239,26 @@ namespace kurs11135.VM
 
                
         }
-      
 
+        private bool IsDecimalValid(string value)
+        {
+            foreach (char c in value)
+            {
+               
+                if (!char.IsDigit(c) && c != '.' && c != ',' && c != '-')
+                {
+                    return false;
+                }
+            }
+
+           
+            if (value.Count(c => c == '.' || c == ',') > 1)
+            {
+                return false;
+            }
+
+            return true;
+        }
 
 
 

@@ -69,12 +69,12 @@ namespace kurs11135.VM
         }
         public string ShortName
         {
-            get => product?.ProductName;
+            get => product?.ShortDescription;
             set
             {
                 if (product != null)
                 {
-                    product.ProductName = value;
+                    product.ShortDescription = value;
                     Signal();
                 }
             }
