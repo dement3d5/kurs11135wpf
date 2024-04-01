@@ -149,7 +149,7 @@ namespace kurs11135.VM
             }
         }
 
-
+        public CommandVM SetOrderReadyCommand { get; set; }
 
 
         public User User { get; private set; }
@@ -169,6 +169,17 @@ namespace kurs11135.VM
             {
                 await LoadOrdersByDate(CreateAt);
             });
+
+            SetOrderReadyCommand = new CommandVM(async () =>
+            {
+                if (SelectedItem != null)
+                {
+                    await UpdateOrderStatus(SelectedItem.Id, 2); 
+                    await LoadAllOrders();
+                }
+            });
+
+
 
             Task.Run(async () =>
             {
@@ -202,10 +213,11 @@ namespace kurs11135.VM
         }
         public async Task UpdateOrderStatus(int orderId, int newStatusId)
         {
-
-            string json = await Api.Post("Orders", new { OrderId = orderId, NewStatusId = newStatusId }, "put");
-
+             var json = await Api.Put($"Orders/updateStatus/{orderId}", newStatusId, null);
         }
+
+
+
 
 
 

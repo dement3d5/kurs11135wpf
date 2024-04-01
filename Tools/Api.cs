@@ -61,5 +61,47 @@ namespace kurs11135.Tools
         {
             return false;
         }
+
+
+        public static async Task<string> Put(string controller, object body, string method)
+        {
+            try
+            {
+                string url = host + controller;
+                if (!string.IsNullOrEmpty(method))
+                    url += $"/{method}";
+
+                string json = "";
+                if (body != null)
+                {
+                    json = JsonSerializer.Serialize(body, body.GetType(), options);
+                    if (HasUnsafeCommands(json))
+                    {
+                        MessageBox.Show("ERROR :D");
+                        return "";
+                    }
+                }
+
+                var response = await client.PutAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+
+                if (response.IsSuccessStatusCode)
+                    return await response.Content.ReadAsStringAsync();
+                else
+                {
+                    MessageBox.Show(await response.Content.ReadAsStringAsync());
+                    return "";
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return "";
+            }
+        }
+
+
+
+
+
     }
 }

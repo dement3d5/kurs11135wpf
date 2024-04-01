@@ -9,7 +9,8 @@
       xmlns:converters="clr-namespace:kurs11135.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Order">
+      Title="Order"
+      x:Name="OrderPage">
 
     <Page.Resources>
         <converters:AlternatingBackgroundConverter x:Key="BackgroundConverter"/>
@@ -27,11 +28,17 @@
             <DatePicker SelectedDate="{Binding CreateAt}" DisplayDateEnd="{x:Static sys:DateTime.Today}" Width="189" Height="27" />
             <Button Content="Фильтр" Command="{Binding FilterOrdersCommand}" Width="130" Height="30" />
         </StackPanel>
-       
+
         <ListView ItemsSource="{Binding orders}" Grid.Row="2" SelectedItem="{Binding SelectedItem}" FontSize="20" FontFamily="Comic Sans MS" Background="{x:Null}">
+            <ListView.Resources>
+                <ContextMenu x:Key="ListViewItemContextMenu">
+                    <MenuItem Header="Готова к выдаче" Command="{Binding DataContext.SetOrderReadyCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding}"/>
+                </ContextMenu>
+            </ListView.Resources>
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Background" Value="{Binding Converter={StaticResource BackgroundConverter}, RelativeSource={RelativeSource Self}}"/>
+                    <Setter Property="ContextMenu" Value="{StaticResource ListViewItemContextMenu}"/>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.View>
