@@ -29,7 +29,7 @@
             <Button Content="Фильтр" Command="{Binding FilterOrdersCommand}" Width="130" Height="30" />
         </StackPanel>
 
-        <ListView ItemsSource="{Binding orders}" Grid.Row="2" SelectedItem="{Binding SelectedItem}" FontSize="20" FontFamily="Comic Sans MS" Background="{x:Null}">
+        <ListView HorizontalContentAlignment="Center" ItemsSource="{Binding orders}" Grid.Row="2" SelectedItem="{Binding SelectedItem}" FontSize="20" FontFamily="Comic Sans MS" Background="{x:Null}">
             <ListView.Resources>
                 <ContextMenu x:Key="ListViewItemContextMenu">
                     <MenuItem Header="Готова к выдаче" Command="{Binding DataContext.SetOrderReadyCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding}"/>
@@ -43,7 +43,7 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status.Name}"/>
+                    <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status.Name}" />
                     <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding CreateAt}"/>
                     <GridViewColumn Header="Товар">
                         <GridViewColumn.CellTemplate>
@@ -76,7 +76,8 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Стоимость" DisplayMemberBinding="{Binding Cost}"/>
-                    <GridViewColumn Header="Пользователь" DisplayMemberBinding="{Binding User.FirstName}"/>
+                    <GridViewColumn Header="Пользователь" DisplayMemberBinding="{Binding User.FirstName}" Width="150"/>
+                    <GridViewColumn Header="Номер телефона" DisplayMemberBinding="{Binding User.Organization}"/>
                 </GridView>
             </ListView.View>
         </ListView>

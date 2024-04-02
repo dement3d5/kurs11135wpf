@@ -129,7 +129,7 @@ namespace kurs11135.VM
         public User User { get; private set; }
 
 
-
+        public CommandVM RefreshCommand { get; }
 
 
         public UserOrdersVM(User currentUser)
@@ -145,6 +145,10 @@ namespace kurs11135.VM
                 OnAddProductToOrder(ListProduct, Quantity);
             });
 
+            RefreshCommand = new CommandVM(async () =>
+            {
+                await LoadOrders();
+            });
 
             Task.Run(async () =>
             {

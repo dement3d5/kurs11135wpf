@@ -26,14 +26,14 @@
                 DisplayMemberPath="Name" Width="100"/>
         </StackPanel>
 
-        <ListView ItemsSource="{Binding FilteredProducts}" SelectedItem="{Binding SelectedItem}" Margin="20,9,20,20" Grid.Row="2">
+        <ListView FontSize="20" FontFamily="Comic Sans MS" ItemsSource="{Binding FilteredProducts}" SelectedItem="{Binding SelectedItem}" Margin="20,9,20,20" Grid.Row="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Изображение">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Border BorderBrush="#CCCCCC" BorderThickness="1" Margin="5">
-                                    <Image Source="{Binding Image.Image}" Height="100" Width="100" Stretch="UniformToFill"/>
+                                    <Image Source="{Binding Image.Image}" Height="150" Width="150" Stretch="UniformToFill"/>
                                 </Border>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

@@ -19,8 +19,9 @@
             <TextBlock Text="Заказы" FontSize="24" FontWeight="Bold" Margin="0,10"/>
         </StackPanel>
 
-        <ListView ItemsSource="{Binding orders}" SelectedItem="{Binding SelectedItem}" Grid.Row="1">
+        <ListView FontSize="20" FontFamily="Comic Sans MS" ItemsSource="{Binding orders}" SelectedItem="{Binding SelectedItem}" Grid.Row="1">
             <ListView.View>
+                
                 <GridView>
                     <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status.Name}"/>
                     <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding CreateAt}"/>
@@ -32,11 +33,27 @@
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{Binding Product.ProductName}" Width="150" Margin="0,0,10,0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Товар">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ItemsControl ItemsSource="{Binding OrderProducts}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{Binding Count}" Width="50"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
+
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -44,6 +61,11 @@
                     <GridViewColumn Header="Стоимость" DisplayMemberBinding="{Binding Cost}"/>
                 </GridView>
             </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Обновить" Command="{Binding RefreshCommand}" />
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
 
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" Margin="0,10">
