@@ -22,10 +22,14 @@ namespace kurs11135.okna
     /// </summary>
     public partial class AuthLog : Window
     {
+
         public AuthLog()
         {
             InitializeComponent();
+           
         }
+
+     
 
         private async void Log(object sender, RoutedEventArgs e)
         {
@@ -66,8 +70,8 @@ namespace kurs11135.okna
             }
         }
 
+       
 
-      
 
         private void Reg(object sender, RoutedEventArgs e)
         {

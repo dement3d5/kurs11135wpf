@@ -1,6 +1,7 @@
 ﻿using kurs11135;
 using kurs11135.okna;
 using kurs11135.Tools;
+using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,8 +16,9 @@ namespace kurs11135
         public Auth()
         {
             InitializeComponent();
+            authLogWindow = new AuthLog();
         }
-
+        private AuthLog authLogWindow;
 
         private async Task<bool> CheckExistingUser(string login)
         {
@@ -36,7 +38,10 @@ namespace kurs11135
             return Regex.IsMatch(phoneNumber, pattern);
         }
 
-
+        private void Auth_Closed(object sender, EventArgs e)
+        {
+            authLogWindow.Show();
+        }
 
 
         private async void Reg(object sender, RoutedEventArgs e)
@@ -45,6 +50,12 @@ namespace kurs11135
             if (string.IsNullOrWhiteSpace(txt_Login.Text) || string.IsNullOrWhiteSpace(txt_Password.Text) || string.IsNullOrWhiteSpace(txt_Org.Text) || string.IsNullOrWhiteSpace(txt_FirstName.Text) || string.IsNullOrWhiteSpace(txt_LastName.Text))
             {
                 MessageBox.Show("Пожалуйста, заполните все поля.");
+                return;
+            }
+
+            if (txt_Password.Text.Length < 6)
+            {
+                MessageBox.Show("Пароль должен содержать как минимум 6 символов!");
                 return;
             }
 
@@ -79,11 +90,14 @@ namespace kurs11135
             }, "SaveUser");
 
             User result = Api.Deserialize<User>(json);
-            MessageBox.Show("Найс!");
+            MessageBox.Show("Успешно!");
 
             AuthLog m = new AuthLog();
             m.Show();
             this.Close();
+
+
+
         }
 
       
