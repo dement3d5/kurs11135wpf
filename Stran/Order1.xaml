@@ -32,7 +32,9 @@
         <ListView HorizontalContentAlignment="Center" ItemsSource="{Binding orders}" Grid.Row="2" SelectedItem="{Binding SelectedItem}" FontSize="20" FontFamily="Comic Sans MS" Background="{x:Null}">
             <ListView.Resources>
                 <ContextMenu x:Key="ListViewItemContextMenu">
+                    <MenuItem Header="Обновить" Command="{Binding DataContext.RefreshCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}" />
                     <MenuItem Header="Готова к выдаче" Command="{Binding DataContext.SetOrderReadyCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding}"/>
+                    <MenuItem Header="Отменить заказ пользователя" Command="{Binding DataContext.RemoveUserOrder, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}" />
                 </ContextMenu>
             </ListView.Resources>
             <ListView.ItemContainerStyle>

@@ -78,18 +78,20 @@ namespace kurs11135.VM
             SellPrice = PostavPriсе * (1 + Markup / 100);
             Signal(nameof(SellPrice));
         }
-
+        public CommandVM RefreshCommand { get; set; }
 
         public AddProdVM()
         {
 
 
-
-
+            RefreshCommand = new CommandVM(async () =>
+            {
+                await che();
+            });
 
             SaveButton = new CommandVM(async () =>
             {
-              
+
                 if (ListProductCategory == null || string.IsNullOrWhiteSpace(NameProduct) || string.IsNullOrWhiteSpace(ShortName) || string.IsNullOrWhiteSpace(Quantity) || string.IsNullOrWhiteSpace(PostavPriсе.ToString()) || string.IsNullOrWhiteSpace(Markup.ToString()))
                 {
                     MessageBox.Show("Пожалуйста, заполните все данные.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -210,9 +212,23 @@ namespace kurs11135.VM
                     MessageBox.Show("Пожалуйста, выберите товар для удаления.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+                 var confirmResult = MessageBox.Show("Вы уверены, что хотите удалить выбранный товар?", "Подтверждение удаления товара", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (confirmResult == MessageBoxResult.Yes)
+                {
+                    var jsonOrders = await Api.Post("Orders", null, "get");
+                    var orders = Api.Deserialize<List<Order>>(jsonOrders);
+                    var acceptedOrders = orders.Where(o => o.OrderProducts.Any(op => op.ProductId == SelectedItem.Id && o.StatusId == 1)).ToList();
+                    if (acceptedOrders.Any())
+                    {
+                        MessageBox.Show("Невозможно удалить товар, так как он используется в активных заказах.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    var jsonDeleteProduct = await Api.Post("Products", SelectedItem.Id, "delete");
+                    await che();
+                }
 
-                var json1 = await Api.Post("Products", SelectedItem.Id, "delete");
-                che();
+
+               
             });
 
             EditProduct = new CommandVM(async () =>

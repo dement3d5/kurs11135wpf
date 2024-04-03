@@ -56,6 +56,11 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
+                <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Обновить" Command="{Binding RefreshCommand}" />
+                </ContextMenu>
+                </ListView.ContextMenu>
         </ListView>
     </Grid>
 </Page>

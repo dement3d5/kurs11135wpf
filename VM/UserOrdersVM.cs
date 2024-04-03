@@ -125,6 +125,7 @@ namespace kurs11135.VM
             }
         }
 
+        public CommandVM DeleteOrderCommand { get; set; }
 
         public User User { get; private set; }
 
@@ -162,15 +163,85 @@ namespace kurs11135.VM
                     await LoadOrders();
                 });
             });
-            DelOrder = new CommandVM(async () =>
-            {
-                var json1 = await Api.Post("Orders", SelectedItem.Id, "delete");
-            });
             EditOrder = new CommandVM(async () =>
             {
                 order = SelectedItem;
                 new EditOrder(order).Show();
             });
+
+
+            DeleteOrderCommand = new CommandVM(async () =>
+            {
+                if (SelectedItem != null)
+                {
+                    var confirmResult = MessageBox.Show("Вы уверены, что хотите отменить выбранный заказ?", "Подтверждение отмены заказа", MessageBoxButton.YesNo);
+                    if (confirmResult == MessageBoxResult.Yes)
+                    {
+                        if (SelectedItem.StatusId == 2)
+                        {
+                            MessageBox.Show("Нельзя удалять товары из заказа со статусом 'Готов к выдаче'.");
+                            return;
+                        }
+
+                        TimeSpan timeSinceCreation = DateTime.Now - (SelectedItem.CreateAt ?? DateTime.MinValue);
+                        if (timeSinceCreation.TotalHours > 12)
+                        {
+                            MessageBox.Show("Нельзя отменить заказ, прошло более 12 часов с момента его создания.");
+                            return;
+                        }
+
+                        foreach (var orderProduct in SelectedItem.OrderProducts.ToList())
+                        {
+                            await Api.Post("OrderProducts", orderProduct.Id, "delete");
+                            var product = products.FirstOrDefault(p => p.Id == orderProduct.ProductId);
+                            if (product != null)
+                            {
+                                product.Quantity = (int.Parse(product.Quantity) + int.Parse(orderProduct.Count)).ToString();
+                                await Api.Post("Products", product, "put");
+                            }
+                        }
+
+
+                        var json = await Api.Post("Orders", SelectedItem.Id, "delete");
+                    }
+
+
+                }    
+       
+                else
+                {
+                    MessageBox.Show("Выберите заказ для удаления");
+                }
+            });
+
+
+        }
+
+        private class Response
+        {
+            public bool Success { get; set; }
+            public string Message { get; set; }
+        }
+
+        private void CalculateProductQuantities()
+        {
+           
+            var allProducts = orders.SelectMany(o => o.OrderProducts);
+            var productQuantities = allProducts.GroupBy(op => op.ProductId)
+                                               .Select(g => new { ProductId = g.Key, Quantity = g.Sum(op => int.Parse(op.Count)) });
+            foreach (var quantity in productQuantities)
+            {
+                var product = products.FirstOrDefault(p => p.Id == quantity.ProductId);
+                if (product != null)
+                {
+                    SelectedProducts.Add(new OrderProduct
+                    {
+                        ProductId = quantity.ProductId,
+                        Count = quantity.Quantity.ToString(),
+                        Product = product
+                    });
+                }
+            }
         }
 
 
@@ -202,6 +273,7 @@ namespace kurs11135.VM
             var result3 = Api.Deserialize<List<User>>(json3);
             users = result3;
             Signal(nameof(users));
+
         }
     }
 }

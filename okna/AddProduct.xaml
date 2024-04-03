@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kurs11135" xmlns:vm="clr-namespace:kurs11135.VM" d:DataContext="{d:DesignInstance Type=vm:AddProdVM}"
         mc:Ignorable="d"
-        Title="AddProduct" MaxHeight="450" MaxWidth="800" MinHeight="450" MinWidth="800">
+        Title="AddProduct" MaxHeight="450" MaxWidth="800" MinHeight="450" MinWidth="800" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
 

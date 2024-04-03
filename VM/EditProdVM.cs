@@ -133,8 +133,20 @@ namespace kurs11135.VM
             }
 
         }
-
-      
+        private async void CloseWindow()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window.DataContext == this)
+                    {
+                        window.Close();
+                        break;
+                    }
+                }
+            });
+        }
 
         public EditProdVM(Product selectedProduct)
         {
@@ -147,7 +159,6 @@ namespace kurs11135.VM
 
             product = selectedProduct;
             Image = selectedProduct.Image?.Image;
-           
             SaveButton = new CommandVM(async () =>
              {
                  var json3 = await Api.Post("ProductImages", new ProductImage { Id = selectedProduct.Image.Id, Image = Image }, "put");
@@ -164,11 +175,18 @@ namespace kurs11135.VM
                      ImageId = selectedProduct.ImageId
                  }, "put");
                  che();
+
+                 if (json1 != null && json3 != null)
+                 {
+                     MessageBox.Show("Товар успешно сохранен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                     che();
+                     CloseWindow();
+                 }
+                 else
+                 {
+                     MessageBox.Show("Произошла ошибка при сохранении товара.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                 }
              });
-
-
-
-
             Task.Run(async () =>
             {
                 await che();

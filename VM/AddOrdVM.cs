@@ -117,9 +117,28 @@ namespace kurs11135.VM
 
 
         private void OnAddProductToOrder(Product selectedProduct, string quantity)
+        {if (SelectedProducts.Any(op => op.ProductId == selectedProduct.Id))
         {
+            MessageBox.Show($"Товар {selectedProduct.ProductName} уже добавлен в заказ.");
+            return;
+        }
+
+        SelectedProducts.Add(new OrderProduct
+        {
+            ProductId = selectedProduct.Id,
+            Count = quantity,
+            Product = selectedProduct
+        });
+
+        CalculateSellPrice();
             if (selectedProduct != null && int.TryParse(quantity, out int count))
             {
+                if (SelectedProducts.Any(op => op.ProductId == selectedProduct.Id))
+                {
+                    MessageBox.Show($"Товар {selectedProduct.ProductName} уже добавлен в заказ.");
+                    return;
+                }
+
                 SelectedProducts.Add(new OrderProduct
                 {
                     ProductId = selectedProduct.Id,

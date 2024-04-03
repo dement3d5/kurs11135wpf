@@ -99,7 +99,7 @@ namespace kurs11135.VM
             }
         }
 
-
+        public CommandVM RefreshCommand { get; set; }
 
         //public void Cleanup()
         //{
@@ -109,9 +109,17 @@ namespace kurs11135.VM
         public CatalogVM()
         {
           
-            che();
+             che();
+
+            RefreshCommand = new CommandVM(async () =>
+            {
+                await che();
+            });
+
 
         }
+
+
 
         private void UpdateProductQuantity(Product updatedProduct)
         {

@@ -63,6 +63,7 @@
             </ListView.View>
             <ListView.ContextMenu>
                 <ContextMenu>
+                    <MenuItem Header="Отменить" Command="{Binding DeleteOrderCommand}" />
                     <MenuItem Header="Обновить" Command="{Binding RefreshCommand}" />
                 </ContextMenu>
             </ListView.ContextMenu>

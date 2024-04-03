@@ -138,9 +138,12 @@ namespace kurs11135.VM
                 ListViewItem item = sender as ListViewItem;
                 if (item != null && SelectedItem != null)
                 {
-                    await UpdateOrderStatus(SelectedItem.Id, 2); 
-                                                                 
-                    await LoadAllOrders();
+                    var result = MessageBox.Show("Вы уверены, что заказ готов к выдаче?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        await UpdateOrderStatus(SelectedItem.Id, 2);
+                        await LoadAllOrders();
+                    }
                 }
             }
             catch (Exception ex)
@@ -149,8 +152,10 @@ namespace kurs11135.VM
             }
         }
 
-        public CommandVM SetOrderReadyCommand { get; set; }
 
+        public CommandVM SetOrderReadyCommand { get; set; }
+        public CommandVM RefreshCommand { get; set; }
+        public CommandVM RemoveUserOrder { get; set; }
 
         public User User { get; private set; }
 
@@ -174,9 +179,58 @@ namespace kurs11135.VM
             {
                 if (SelectedItem != null)
                 {
-                    await UpdateOrderStatus(SelectedItem.Id, 2); 
-                    await LoadAllOrders();
+                    var result = MessageBox.Show("Вы уверены, что заказ готов к выдаче?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        await UpdateOrderStatus(SelectedItem.Id, 2);
+                        await LoadAllOrders();
+                    }
                 }
+            });
+
+            RemoveUserOrder = new CommandVM(async () =>
+            {
+                if (SelectedItem != null)
+                {
+                    var confirmResult = MessageBox.Show("Вы уверены, что хотите отменить выбранный заказ?", "Подтверждение отмены заказа", MessageBoxButton.YesNo);
+                    if (confirmResult == MessageBoxResult.Yes)
+                    {
+                        if (SelectedItem.StatusId == 2)
+                        {
+                            MessageBox.Show("Нельзя удалять товары из заказа со статусом 'Готов к выдаче'.");
+                            return;
+                        }
+
+
+
+                        foreach (var orderProduct in SelectedItem.OrderProducts.ToList())
+                        {
+                            await Api.Post("OrderProducts", orderProduct.Id, "delete");
+                            var product = products.FirstOrDefault(p => p.Id == orderProduct.ProductId);
+                            if (product != null)
+                            {
+                                product.Quantity = (int.Parse(product.Quantity) + int.Parse(orderProduct.Count)).ToString();
+                                await Api.Post("Products", product, "put");
+                            }
+                        }
+
+
+                        var json = await Api.Post("Orders", SelectedItem.Id, "delete");
+                    }
+
+
+                }
+
+                else
+                {
+                    MessageBox.Show("Выберите заказ для удаления");
+                }
+            });
+
+
+            RefreshCommand = new CommandVM(async () =>
+            {
+                await LoadAllOrders();
             });
 
 
