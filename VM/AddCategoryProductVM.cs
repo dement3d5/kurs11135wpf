@@ -53,7 +53,7 @@ namespace kurs11135.VM
                 }, "SaveCategory");
                 ProductCategory result1 = Api.Deserialize<ProductCategory>(json1);
 
-                MessageBox.Show("Товар успешно добавлен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Категория успешно создана.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
 
                 CloseWindow();

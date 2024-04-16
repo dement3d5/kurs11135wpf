@@ -46,7 +46,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status.Name}" />
-                    <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding CreateAt}"/>
+                    <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding CreateAt, StringFormat='{}{0:MM/dd/yyyy HH:mm:ss}'}"/>
                     <GridViewColumn Header="Товар">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
