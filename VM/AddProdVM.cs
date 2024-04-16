@@ -22,6 +22,7 @@ namespace kurs11135.VM
         public CommandVM SaveButton { get; set; }
         public CommandVM ComingProduct { get; set; }
         public CommandVM EditProduct { get; set; }
+        public CommandVM AddCategoty { get; set; }
         public Product SelectedItem { get; set; }
         public CommandVM DelProduct { get; set; }
 
@@ -172,12 +173,17 @@ namespace kurs11135.VM
                 CloseWindow();
             });
 
-          
-           
 
 
 
 
+
+            AddCategoty = new CommandVM(() =>
+            {
+                AddCategotyProduct acp = new AddCategotyProduct();
+                acp.Show();
+
+            });
 
 
 
