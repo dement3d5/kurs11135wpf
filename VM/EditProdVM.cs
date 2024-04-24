@@ -93,19 +93,7 @@ namespace kurs11135.VM
             }
 
         }
-        public decimal SellPrice
-        {
-            get => (decimal)(product?.SellPrice);
-            set
-            {
-                if (product != null)
-                {
-                    product.SellPrice = value;
-                    Signal();
-                }
-            }
-
-        }
+      
 
         public string Quantity
         {
@@ -120,18 +108,53 @@ namespace kurs11135.VM
             }
 
         }
-        public float Markup
+       
+        private decimal postavPrice;
+        public decimal PostavPrice
         {
-            get => (float)(product?.Markup);
+            get => postavPrice;
             set
             {
-                if (product != null)
-                {
-                    product.Markup = value;
-                    Signal();
-                }
+                postavPrice = value;
+                CalculateSellPrice();
+                Signal();
             }
+        }
 
+        private float markup;
+        public float Markup
+        {
+            get => markup;
+            set
+            {
+                markup = value;
+                CalculateSellPrice();
+                Signal();
+            }
+        }
+
+        private decimal sellPrice;
+        public decimal SellPrice
+        {
+            get => sellPrice;
+            set
+            {
+                sellPrice = value;
+                Signal();
+            }
+        }
+
+     
+
+        private void CalculateSellPrice()
+        {
+            if (product != null)
+            {
+              
+                    SellPrice = PostavPriсе * (1 + (decimal)Markup / 100);
+                    Signal(nameof(SellPrice));
+
+            }
         }
         private async void CloseWindow()
         {
@@ -159,6 +182,7 @@ namespace kurs11135.VM
 
             product = selectedProduct;
             Image = selectedProduct.Image?.Image;
+            CalculateSellPrice();
             SaveButton = new CommandVM(async () =>
              {
                  var json3 = await Api.Post("ProductImages", new ProductImage { Id = selectedProduct.Image.Id, Image = Image }, "put");

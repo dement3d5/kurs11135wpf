@@ -54,8 +54,6 @@ namespace kurs11135.VM
         public List<string> AvailableMonths { get; set; }
         public string SelectedMonth { get; set; }
 
-      
-
         public RecordsVM()
         {
             SeriesCollection = new SeriesCollection();
@@ -176,6 +174,43 @@ namespace kurs11135.VM
 
             SeriesCollection.Add(series);
         }
+
+
+        public void BuildChartByDateRange(DateTime fromDate, DateTime toDate)
+        {
+            using (var dbContext = new user1Context())
+            {
+                var orders = dbContext.Orders
+                    .Include(o => o.OrderProducts)
+                    .Where(o => o.CreateAt.Value.Date >= fromDate.Date && o.CreateAt.Value.Date <= toDate.Date)
+                    .ToList();
+                var products = dbContext.Products.ToList();
+
+                SeriesCollection.Clear();
+                DateLabels.Clear();
+                TotalRevenue = 0;
+                TotalExpenses = 0;
+
+                DateLabels = orders
+                    .GroupBy(o => o.CreateAt.Value.Date)
+                    .OrderBy(g => g.Key)
+                    .Select(g => g.Key.ToString("yyyy-MM-dd"))
+                    .ToList();
+
+                CalculateTotalProductPrice(products);
+                AddDataToSeriesCollection("Выручка", orders.Select(o => o.CreateAt.Value.Date).Distinct().OrderBy(d => d),
+                    date => orders.Where(o => o.CreateAt.Value.Date == date).Sum(o => o.Cost ?? 0));
+
+                AddDataToSeriesCollection("Затраты", orders.Select(o => o.CreateAt.Value.Date).Distinct().OrderBy(d => d),
+                    date => orders.Where(o => o.CreateAt.Value.Date == date).Sum(o => CalculateExpenses(o, products)));
+
+                AddDataToSeriesCollection("Прибыль", orders.Select(o => o.CreateAt.Value.Date).Distinct().OrderBy(d => d),
+                    date => orders.Where(o => o.CreateAt.Value.Date == date).Sum(o => (o.Cost ?? 0) - CalculateExpenses(o, products)));
+
+                TotalProfit = TotalRevenue - TotalExpenses;
+            }
+        }
+
 
 
         //private void CalculateRevenueAndExpenses(List<Order> orders, List<Product> products)
