@@ -46,6 +46,12 @@ namespace kurs11135.VM
             SaveButton = new CommandVM(async() =>
             {
 
+                if (string.IsNullOrWhiteSpace(CategoryName))
+                {
+                    MessageBox.Show("Пожалуйста, введите название категории.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 var json1 = await Api.Post("ProductCategories", new ProductCategory
                 {
                     Name = CategoryName

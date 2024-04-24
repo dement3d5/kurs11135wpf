@@ -85,18 +85,31 @@ namespace kurs11135.VM
 
             AddProductToComingCommand = new CommandVM(() =>
             {
-                if (int.TryParse(Quantity, out int quantityValue))
+                if (SelectedProduct == null)
+                {
+                    MessageBox.Show("Пожалуйста, выберите товар.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                if (int.TryParse(Quantity, out int quantityValue) && quantityValue > 0)
                 {
                     OnAddProductToComing(SelectedProduct, quantityValue);
                 }
                 else
                 {
-                    
+                    MessageBox.Show("Пожалуйста, введите корректное количество товара.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
 
             SaveButton = new CommandVM(async () =>
             {
+
+                if (SelectedComingProducts.Count == 0)
+                {
+                    MessageBox.Show("Добавьте хотя бы один товар.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 foreach (var comingProduct in SelectedComingProducts)
                 {
                     Product product = Products.FirstOrDefault(p => p.Id == comingProduct.ProductId);
