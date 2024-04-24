@@ -34,7 +34,6 @@ namespace kurs11135.Stran
             DateTime fromDate = FromDatePicker.SelectedDate.Value;
             DateTime toDate = ToDatePicker.SelectedDate.Value;
 
-            // Проверяем, что дата не слишком старая
             if (fromDate < SqlDateTime.MinValue.Value || toDate < SqlDateTime.MinValue.Value)
             {
                 MessageBox.Show("Выбранная дата слишком старая. Пожалуйста, выберите более поздние даты.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
