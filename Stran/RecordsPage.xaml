@@ -22,13 +22,10 @@
                 <RowDefinition Height="27*"/>
                 <RowDefinition Height="31*"/>
             </Grid.RowDefinitions>
-            <!-- Добавленные элементы -->
             <Label Content="Выберите диапазон дат:" Grid.Row="0" Grid.Column="0" Margin="196,10,146,43" FontSize="16"/>
             <DatePicker x:Name="FromDatePicker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="174,48,0,0" Width="133"/>
             <DatePicker x:Name="ToDatePicker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="322,48,0,0" Width="132"/>
             <Button Foreground="White" Background="#FF3498DB" Content="Построить график" Click="BuildRangeChart_Click" Margin="400,16,21,46"/>
-
-            <!-- Остальные элементы вашей страницы -->
             <lvc:CartesianChart Series="{Binding SeriesCollection, Mode=TwoWay}" LegendLocation="Right"
                                 Width="494" Height="218" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,8,0,0" Grid.Row="1">
                 <lvc:CartesianChart.RenderTransform>
