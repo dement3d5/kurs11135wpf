@@ -26,7 +26,7 @@
         </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1">
             <DatePicker SelectedDate="{Binding CreateAt}" DisplayDateEnd="{x:Static sys:DateTime.Today}" Width="189" Height="27" />
-            <Button Content="Фильтр" Command="{Binding FilterOrdersCommand}" Width="130" Height="30" />
+            <Button Foreground="White" Background="#FF3498DB" Content="Фильтр" Command="{Binding FilterOrdersCommand}" Width="130" Height="30" />
         </StackPanel>
 
         <ListView HorizontalContentAlignment="Center" ItemsSource="{Binding orders}" Grid.Row="2" SelectedItem="{Binding SelectedItem}" FontSize="20" FontFamily="Comic Sans MS" Background="{x:Null}">
